@@ -5,6 +5,7 @@ import { middleware } from "./middleware";
 import {CreateUserSchema,SigninSchema,CreateRoomSchema} from "@repo/common/types"
 import {prismaClient} from "@repo/db/client"
 import cors from "cors"
+import bcrypt from "bcrypt"
 
 const app = express();
 app.use(express.json())
@@ -20,10 +21,11 @@ app.post("/signup",async (req,res)=>{
     }
 
     try{
+        const hashedPassword = await bcrypt.hash(parsedData.data.password, 10); 
         const user = await prismaClient.user.create({
         data:{
             email: parsedData.data?.email,
-            password:parsedData.data.password,
+            password:hashedPassword,
             name:parsedData.data.name
         }
     })
@@ -48,8 +50,7 @@ app.post("/signin",async (req,res)=>{
 
     const user = await prismaClient.user.findFirst({
         where:{
-            email: parsedData.data.email,
-            password:parsedData.data.password
+            email: parsedData.data.email
         }
     })
 
@@ -57,6 +58,12 @@ app.post("/signin",async (req,res)=>{
         res.status(403).json({
             message:"Not authorized"
         })
+        return;
+    }
+
+    const passwordMatch = await bcrypt.compare(parsedData.data.password, user.password);
+    if (!passwordMatch) {
+        res.status(403).json({ message: "Invalid email or password" });
         return;
     }
 
