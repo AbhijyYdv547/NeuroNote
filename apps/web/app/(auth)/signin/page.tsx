@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { setToken } from "../../../hooks/useAuthToken";
 import toast, { Toaster } from "react-hot-toast";
+import { useRedirectIfLoggedIn } from "../../../hooks/useRedirectIfLoggedIn";
 
 export default function Signin() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -33,6 +34,9 @@ export default function Signin() {
     }
   }
 
+  useRedirectIfLoggedIn();
+
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-black text-white">
       <Toaster position="top-center" />
@@ -42,7 +46,7 @@ export default function Signin() {
         <div className="space-y-4">
           <input
             type="text"
-            placeholder="Username"
+            placeholder="Email"
             className="w-full px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             onChange={(e) => setForm({ ...form, email: e.target.value })}
           />
