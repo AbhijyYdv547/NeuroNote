@@ -67,7 +67,7 @@ wss.on("connection", function connection(ws, request) {
             if(!user){
                 return;
             }
-            user.rooms = user?.rooms.filter(x => x === parsedData.room)
+            user.rooms = user?.rooms.filter(x => x === parsedData.room.toString())
         }
 
         if(parsedData.type == "chat"){
@@ -80,12 +80,14 @@ wss.on("connection", function connection(ws, request) {
                 data:{
                     roomId:Number(roomId),
                     message,
-                    sender:userId
+                    senderId:Number(userId)
                 }
             })
             
             users.forEach(user =>{
-                if(user.rooms.includes(roomId)){
+                console.log(`Checking user ${user.userId} in rooms: ${user.rooms}`);
+                if(user.rooms.includes(roomId.toString())){
+                    console.log(`Sending message to user ${user.userId}`);
                     user.ws.send(JSON.stringify({
                         type:"chat",
                         message:message,

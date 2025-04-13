@@ -14,11 +14,12 @@ datasource db {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
+  id       Int    @id @default(autoincrement())
   name     String
-  email    String   @unique
+  email    String @unique
   password String
-  rooms    Room[]   @relation("RoomAdmin")
+  rooms    Room[] @relation("RoomAdmin")
+  chats    Chat[] @relation("UserChats")
 }
 
 model Room {
@@ -30,10 +31,11 @@ model Room {
 }
 
 model Chat {
-  id      Int    @id @default(autoincrement())
-  roomId  Int
-  sender  String
-  message String
+  id        Int      @id @default(autoincrement())
+  roomId    Int
+  senderId  Int
+  sender    User     @relation("UserChats", fields: [senderId], references: [id])
+  message   String
   timestamp DateTime @default(now())
-  room    Room   @relation(fields: [roomId], references: [id])
+  room      Room     @relation(fields: [roomId], references: [id])
 }
