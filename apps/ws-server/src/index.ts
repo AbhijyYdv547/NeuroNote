@@ -28,7 +28,6 @@ function checkUser(token: string): string | null {
     }catch(e){
         return null;
     }
-    return null;
 }
 
 wss.on("connection", function connection(ws, request) {
@@ -67,7 +66,7 @@ wss.on("connection", function connection(ws, request) {
             if(!user){
                 return;
             }
-            user.rooms = user?.rooms.filter(x => x === parsedData.room.toString())
+            user.rooms = user?.rooms.filter(x => x === parsedData.room)
         }
 
         if(parsedData.type == "chat"){

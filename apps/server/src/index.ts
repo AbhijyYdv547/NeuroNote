@@ -40,7 +40,7 @@ app.post("/signup",async (req,res)=>{
 })
 
 app.post("/signin",async (req,res)=>{
-      const parsedData = SigninSchema.safeParse(req.body);
+    const parsedData = SigninSchema.safeParse(req.body);
     if(!parsedData.success){
         res.json({
             message:"Incorrect Inputs"
@@ -87,7 +87,7 @@ app.post("/room",middleware,async (req,res)=>{
     //@ts-ignore
     const userId = req.userId;
     try {
-            const room = await prismaClient.room.create({
+        const room = await prismaClient.room.create({
         data:{
             slug:parsedData.data.name,
             adminId:userId
@@ -99,6 +99,26 @@ app.post("/room",middleware,async (req,res)=>{
     } catch (e) {
         res.status(411).json({
             message:"Room already exists with this name"
+        })
+    }
+})
+
+app.get("/rooms",middleware,async (req,res)=>{
+    try {
+        const rooms = await prismaClient.room.findMany();
+        console.log(rooms);
+        if(rooms.length === 0){
+            res.status(404).json({
+                message:"No rooms found"
+            })
+            return;
+        }
+    res.json({
+        rooms:rooms
+    })
+    } catch (e) {
+        res.status(411).json({
+            message:"Some error occured"
         })
     }
 })
@@ -133,7 +153,6 @@ app.get("/room/:slug",async (req,res)=>{
             slug
         },
     })
-
     res.json({
         room
     })
