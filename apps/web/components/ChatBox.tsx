@@ -2,7 +2,11 @@
 
 import { useEffect, useState, useRef } from "react";
 import { getToken } from "../hooks/useAuthToken";
+import { jwtDecode } from "jwt-decode";
 
+interface TokenPayload {
+  userId: string;
+}
 interface ChatMessage {
   sender: string;
   message: string;
@@ -13,11 +17,23 @@ export default function ChatBox({ roomId }: { roomId: string }) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement | null>(null);
-  
+  const [currentUser, setCurrentUser] = useState<string | null>(null);
 
-  useEffect(() => {
-    const token = getToken();
-    if (!token) return;
+
+useEffect(() => {
+  const token = getToken();
+  // console.log("TOKEN:", token);
+  if (!token) return;
+
+  try {
+    const decoded = jwtDecode<TokenPayload>(token);
+    // console.log("DECODED:", decoded);
+
+    if (decoded?.userId) {
+      setCurrentUser(decoded.userId);
+    } else {
+      console.warn("Token missing 'id'");
+    }
 
     const ws = new WebSocket(`ws://localhost:8080?token=${token}`);
 
@@ -28,17 +44,26 @@ export default function ChatBox({ roomId }: { roomId: string }) {
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       if (data.type === "chat") {
-        setMessages((prev) => [...prev, { sender: data.sender, message: data.message }]);
+        setMessages((prev) => [
+          ...prev,
+          { sender: data.sender, message: data.message },
+        ]);
       }
     };
 
     setSocket(ws);
 
     return () => {
-      ws.send(JSON.stringify({ type: "leave_room", roomId }));
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({ type: "leave_room", roomId }));
+      }
       ws.close();
     };
-  }, [roomId]);
+  } catch (err) {
+    console.error("Error decoding token:", err);
+  }
+}, [roomId]);
+
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -54,20 +79,48 @@ export default function ChatBox({ roomId }: { roomId: string }) {
     };
 
     socket.send(JSON.stringify(messageData));
-setInput("");
+    setInput("");
   }
 
   return (
-    <div className="text-white p-4 max-w-2xl mx-auto">
+    <div className="text-white p-4 max-w-3xl mx-auto flex flex-col h-[90vh]">
       <h2 className="text-xl mb-4 font-bold">Connected to room: {roomId}</h2>
 
-      <div className="bg-zinc-900 h-80 overflow-y-auto p-4 rounded mb-4">
-        {messages.map((msg, index) => (
-          <div key={index} className="mb-2">
-            <span className="text-blue-400 font-semibold">{msg.sender}:</span>
-            <span className="ml-2">{msg.message}</span>
-          </div>
-        ))}
+      <div className="flex-1 bg-zinc-900 overflow-y-auto p-4 rounded mb-4 space-y-3">
+        {messages.map((msg, index) => {
+          const isSelf = msg.sender === currentUser;
+          console.log("msg.sender:", msg.sender, "currentUser:", currentUser);
+
+          return (
+            <div
+              key={index}
+              className={`flex ${isSelf ? "justify-end" : "justify-start"}`}
+            >
+              <div
+                className={`rounded-lg px-4 py-2 max-w-[75%] break-words ${isSelf
+                    ? "bg-blue-600 text-white"
+                    : "bg-zinc-800 text-gray-100"
+                  }`}
+              >
+
+                {!isSelf && (
+                  <div className="text-xs text-gray-400 mb-1 font-medium">
+                    {msg.sender}
+                  </div>
+                )}
+                
+                {isSelf && (
+                  <div className="text-xs text-gray-400 mb-1 font-medium">
+                    You
+                  </div>
+                )}
+                
+                <div>{msg.message}</div>
+              </div>
+            </div>
+          );
+        })}
+
         <div ref={bottomRef} />
       </div>
 
@@ -77,11 +130,11 @@ setInput("");
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
           placeholder="Type your message..."
-          className="flex-1 p-2 bg-zinc-800 rounded border border-zinc-700"
+          className="flex-1 p-2 bg-zinc-800 rounded border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
         <button
           onClick={sendMessage}
-          className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
+          className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700 transition-colors"
         >
           Send
         </button>

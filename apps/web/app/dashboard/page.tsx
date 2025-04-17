@@ -14,7 +14,7 @@ export default function Dashboard() {
     const token = getToken();
 
   useEffect(() => {
-    // Load all rooms initially
+
     showRooms();
   }, []);
 
