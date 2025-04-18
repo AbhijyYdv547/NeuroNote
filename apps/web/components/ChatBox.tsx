@@ -59,6 +59,17 @@ useEffect(() => {
          }
     };
 
+    fetch(`http://localhost:3001/chats/${roomId}`)
+  .then(res => res.json())
+  .then(data => {
+    const formattedMessages = (data.messages || []).map((msg: any) => ({
+      sender: String(msg.senderId), // normalize to match WebSocket messages
+      message: msg.message,
+      timestamp: msg.timestamp,
+    }));
+    setMessages(formattedMessages);
+  });
+
 
     setSocket(ws);
 

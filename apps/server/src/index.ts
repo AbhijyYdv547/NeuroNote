@@ -130,28 +130,38 @@ app.get("/rooms",middleware,async (req,res)=>{
     }
 })
 
-app.get("/chats/:roomId",async (req,res)=>{
-   try{
-     const roomId = Number(req.params.roomId);
+app.get("/chats/:roomId", async (req, res) => {
+  try {
+    const roomId = Number(req.params.roomId);
+    if (isNaN(roomId)) {
+      res.status(400).json({ message: "Invalid roomId" });
+      return;
+    }
+
+    const limit = parseInt(req.query.limit as string) || 50;
+    const cursor = req.query.cursor ? parseInt(req.query.cursor as string) : undefined;
+
     const messages = await prismaClient.chat.findMany({
-        where:{
-            roomId:roomId
-        },
-        orderBy:{
-            id:"desc"
-        },
-        take:1000
-    })
+      where: {
+        roomId,
+        ...(cursor && { id: { lt: cursor } }) // Pagination logic
+      },
+      orderBy: {
+        id: "desc"
+      },
+      take: limit,
+    });
 
     res.json({
-        messages
-    })
-   }catch(e){
-    res.json({
-        message:"Some error occured"
-    })
-   }
-})
+      messages: messages.reverse(), // Return in ascending order for frontend
+      nextCursor: messages.length ? messages[messages.length - 1]!.id : null
+    });
+  } catch (e) {
+    console.error("Error fetching messages:", e);
+    res.status(500).json({ message: "Failed to fetch messages" });
+  }
+});
+
 
 app.get("/room/:slug",async (req,res)=>{
     const slug = req.params.slug;
