@@ -10,11 +10,13 @@ interface TokenPayload {
 interface ChatMessage {
   sender: string;
   message: string;
+  timestamp: string;
 }
 
 export default function ChatBox({ roomId }: { roomId: string }) {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [typingUsers, setTypingUsers] = useState<string[]>([]);
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const [currentUser, setCurrentUser] = useState<string | null>(null);
@@ -46,10 +48,17 @@ useEffect(() => {
       if (data.type === "chat") {
         setMessages((prev) => [
           ...prev,
-          { sender: data.sender, message: data.message },
+          { sender: data.sender, message: data.message,timestamp:data.timestamp },
         ]);
       }
+      if (data.type === "typing" && data.sender !== currentUser) {
+           setTypingUsers((prev) => [...new Set([...prev, data.sender])]);
+           setTimeout(() => {
+             setTypingUsers((prev) => prev.filter((u) => u !== data.sender));
+           }, 2000);
+         }
     };
+
 
     setSocket(ws);
 
@@ -69,13 +78,22 @@ useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+ function handleTyping() {
+    if (socket && currentUser) {
+      socket.send(
+        JSON.stringify({ type: "typing", sender: currentUser, roomId })
+      );
+    }
+  }
+
   function sendMessage() {
     if (!input.trim() || !socket) return;
 
     const messageData = {
       type: "chat",
       message: input,
-      roomId
+      roomId,
+      timestamp: new Date().toISOString(),
     };
 
     socket.send(JSON.stringify(messageData));
@@ -103,19 +121,17 @@ useEffect(() => {
                   }`}
               >
 
-                {!isSelf && (
-                  <div className="text-xs text-gray-400 mb-1 font-medium">
-                    {msg.sender}
-                  </div>
-                )}
-                
-                {isSelf && (
-                  <div className="text-xs text-gray-400 mb-1 font-medium">
-                    You
-                  </div>
-                )}
+                <div className="text-xs text-gray-400 mb-1 font-medium">
+                  {isSelf ? "You" : msg.sender}
+                </div>
                 
                 <div>{msg.message}</div>
+                <div className="text-[10px] text-gray-400 mt-1 text-right">
+                  {new Date(msg.timestamp).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </div>
               </div>
             </div>
           );
@@ -124,11 +140,20 @@ useEffect(() => {
         <div ref={bottomRef} />
       </div>
 
+       {typingUsers.length > 0 && (
+        <div className="text-sm italic text-gray-400 mb-2">
+          {typingUsers.join(", ")} {typingUsers.length > 1 ? "are" : "is"} typing...
+        </div>
+      )}
+
       <div className="flex gap-2">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+           onKeyDown={(e) => {
+            if (e.key === "Enter") sendMessage();
+            else handleTyping();
+          }}
           placeholder="Type your message..."
           className="flex-1 p-2 bg-zinc-800 rounded border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />

@@ -48,7 +48,9 @@ app.post("/signin",async (req,res)=>{
         return;
     }
 
-    const user = await prismaClient.user.findFirst({
+    try{
+        console.log("Parsed email:", parsedData.data.email);
+        const user = await prismaClient.user.findFirst({
         where:{
             email: parsedData.data.email
         }
@@ -74,6 +76,11 @@ app.post("/signin",async (req,res)=>{
     res.json({
         token
     })
+    }catch (e) {
+  console.error("Sign-in error:", e);
+  res.status(500).json({ message: "Internal server error" });
+}
+
 })
 
 app.post("/room",middleware,async (req,res)=>{

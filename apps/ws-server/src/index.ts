@@ -72,6 +72,7 @@ wss.on("connection", function connection(ws, request) {
         if(parsedData.type == "chat"){
             const roomId = parsedData.roomId;
             const message = parsedData.message;
+              const timestamp = new Date().toISOString();
             if (!roomId || !message) return;
 
 
@@ -79,7 +80,8 @@ wss.on("connection", function connection(ws, request) {
                 data:{
                     roomId:Number(roomId),
                     message,
-                    senderId:Number(userId)
+                    senderId:Number(userId),
+                    timestamp: new Date(),
                 }
             })
             
@@ -91,13 +93,32 @@ wss.on("connection", function connection(ws, request) {
                         type:"chat",
                         message:message,
                         roomId,
-                        sender:userId
+                        sender:userId,
+                        timestamp
                     }))
                 }
             })
 
             
         }
+
+        if (parsedData.type === "typing") {
+  const roomId = parsedData.roomId;
+  const sender = userId;
+
+  users.forEach((user) => {
+    if (user.ws !== ws && user.rooms.includes(roomId)) {
+      user.ws.send(
+        JSON.stringify({
+          type: "typing",
+          sender,
+          roomId,
+        })
+      );
+    }
+  });
+}
+
     })
 
     ws.on("close", () => {
