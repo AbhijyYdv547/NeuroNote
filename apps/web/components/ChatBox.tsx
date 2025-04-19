@@ -32,7 +32,7 @@ useEffect(() => {
     // console.log("DECODED:", decoded);
 
     if (decoded?.userId) {
-      setCurrentUser(decoded.userId);
+      setCurrentUser(decoded.userId.toString());
     } else {
       console.warn("Token missing 'id'");
     }
