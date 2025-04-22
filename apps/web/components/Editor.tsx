@@ -5,13 +5,19 @@ import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { getToken } from "../hooks/useAuthToken";
+
+
+const docId = "default-doc";
+const token = getToken();
 
 const ydoc = new Y.Doc();
 
 const provider = new HocuspocusProvider({
   url: 'ws://localhost:1234',
-  name: 'my-room', 
+  name: docId, 
   document: ydoc,
+  token
 });
 
 export const Editor = () => {

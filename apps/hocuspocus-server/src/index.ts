@@ -1,39 +1,50 @@
-// server.ts
+
 import { Server } from "@hocuspocus/server";
-import * as fs from "fs";
-import * as path from "path";
 import * as Y from "yjs";
-
-const DOC_DIR = path.join(__dirname, "documents");
-
-// Make sure the folder exists
-if (!fs.existsSync(DOC_DIR)) {
-  fs.mkdirSync(DOC_DIR);
-}
+import {prismaClient} from "@repo/db/client"
+import jwt,{JwtPayload} from "jsonwebtoken"
+import { JWT_SECRET } from "@repo/backend-common/config";
 
 const server = Server.configure({
   port: 1234,
 
+  onAuthenticate: async ({ token }) => {
+  if (!token) throw new Error("Missing token");
+
+  const payload = jwt.verify(token, JWT_SECRET) as JwtPayload;
+  if (!payload?.userId) throw new Error("Invalid token");
+
+  console.log("🔐 Authenticated:", payload.userId);
+},
+
+
   // 🧠 Save document content when it's updated
   onStoreDocument: async ({ document, documentName }) => {
-    const filePath = path.join(DOC_DIR, `${documentName}.yjs`);
-    const state = Y.encodeStateAsUpdate(document);
-    fs.writeFileSync(filePath, state);
-    console.log(`💾 Stored: ${filePath}`);
+    const binary = Y.encodeStateAsUpdate(document);
+    await prismaClient.document.upsert({
+      where: { id: documentName },
+      update: { content: binary },
+      create: { id: documentName, content: binary },
+    });
+    console.log("💾 Saved to Postgres:", documentName);
   },
 
   // 📦 Load document content when someone joins
   onLoadDocument: async ({ documentName }) => {
-    const filePath = path.join(DOC_DIR, `${documentName}.yjs`);
-    if (fs.existsSync(filePath)) {
-      const update = fs.readFileSync(filePath);
-      const doc = new Y.Doc();
-      Y.applyUpdate(doc, update);
-      return doc;
+     const entry = await prismaClient.document.findUnique({
+      where: { id: documentName },
+    });
+
+    const doc = new Y.Doc();
+
+    if (entry) {
+      Y.applyUpdate(doc, entry.content);
+      console.log("📥 Loaded from Postgres:", documentName);
+    } else {
+      console.log("🆕 Creating new doc:", documentName);
     }
-    return new Y.Doc(); // return empty doc if not found
-  },
-});
+
+    return doc;
+}});
 
 server.listen();
-console.log("🚀 Hocuspocus server running on ws://localhost:1234");
