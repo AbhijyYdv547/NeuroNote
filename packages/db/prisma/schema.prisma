@@ -39,3 +39,9 @@ model Chat {
   timestamp DateTime @default(now())
   room      Room     @relation(fields: [roomId], references: [id])
 }
+
+model Document {
+  id        String   @id
+  content   Bytes
+  updatedAt DateTime @updatedAt
+}
