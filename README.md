@@ -1,84 +1,62 @@
-# Turborepo starter
+# NeuroNote 🚀
 
-This Turborepo starter is maintained by the Turborepo core team.
+**AI-powered collaborative note-taking tool** leveraging Tiptap, Hocuspocus, and Gemini API to enable seamless real-time editing with intelligent AI assistance.
 
-## Using this example
+---
 
-Run the following command:
+## Features
 
-```sh
-npx create-turbo@latest
-```
+- Real-time collaborative editing synchronized via WebSockets  
+- AI-driven note summarization and content enhancement  
+- Rich-text editing with Tiptap supporting markdown, embeds, and mentions  
+- Intuitive, responsive user interface for smooth experience across devices  
+- Conflict resolution and version control powered by Hocuspocus  
+- Export notes easily as PDF or Markdown files
 
-## What's inside?
+---
 
-This Turborepo includes the following packages/apps:
+## Tech Stack
 
-### Apps and Packages
+- **Frontend:** React, Next.js, Tiptap  
+- **Backend:** Node.js, Hocuspocus (WebSocket server)  
+- **AI Integration:** Gemini API  
+- **Database:** PostgreSQL with Prisma ORM  
+- **Deployment:** Vercel
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+---
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+## Screenshots / GIFs
 
-### Utilities
+*Coming soon — stay tuned for live previews and walkthroughs!*
 
-This Turborepo has some additional tools already setup for you:
+---
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+## Getting Started
 
-### Build
+### Prerequisites
 
-To build all apps and packages, run the following command:
+- Node.js (v16 or higher)  
+- Yarn or npm package manager
 
-```
-cd my-turborepo
-pnpm build
-```
+---
 
-### Develop
+## Usage
 
-To develop all apps and packages, run the following command:
+- Create or join a collaboration room to start real-time note-taking  
+- Collaborate seamlessly with others on shared notes  
+- Utilize AI-powered commands for summarization and content suggestions  
+- Export your finalized notes as PDF or Markdown files for easy sharing
 
-```
-cd my-turborepo
-pnpm dev
-```
+---
 
-### Remote Caching
+## Contributing
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+Contributions, suggestions, and bug reports are welcome!  
+Feel free to open an issue or submit a pull request.
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+---
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+## Contact
 
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/docs/reference/command-line-reference)
+Created by Abhijay Yadav — [yadavabhijay@gmail.com](mailto:yadavabhijay@gmail.com)  
+Follow me on [GitHub](https://github.com/AbhijyYdv547)
