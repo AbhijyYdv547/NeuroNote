@@ -20,6 +20,7 @@ model User {
   password String
   rooms    Room[] @relation("RoomAdmin")
   chats    Chat[] @relation("UserChats")
+  memberships RoomMembership[]
 }
 
 model Room {
@@ -28,6 +29,9 @@ model Room {
   adminId Int
   admin   User   @relation("RoomAdmin", fields: [adminId], references: [id])
   chats   Chat[]
+  documentId  String?          @unique// FK to Document
+  document    Document?        @relation(fields: [documentId], references: [id])
+  members     RoomMembership[]
 }
 
 model Chat {
@@ -44,4 +48,15 @@ model Document {
   id        String   @id
   content   Bytes
   updatedAt DateTime @updatedAt
+  room      Room?    
+}
+
+model RoomMembership {
+  id      Int  @id @default(autoincrement())
+  user    User @relation(fields: [userId], references: [id])
+  userId  Int
+  room    Room @relation(fields: [roomId], references: [id])
+  roomId  Int
+
+  @@unique([userId, roomId])
 }

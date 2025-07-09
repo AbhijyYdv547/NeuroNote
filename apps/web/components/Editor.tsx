@@ -8,19 +8,21 @@ import StarterKit from "@tiptap/starter-kit";
 import { getToken } from "../hooks/useAuthToken";
 
 
-const docId = "default-doc";
-const token = getToken();
 
-const ydoc = new Y.Doc();
+export const Editor = ({ docId }: { docId: string }) => {
 
-const provider = new HocuspocusProvider({
-  url: 'ws://localhost:1234',
-  name: docId, 
-  document: ydoc,
-  token
-});
+  const token = getToken();
 
-export const Editor = () => {
+  const ydoc = new Y.Doc();
+
+  const provider = new HocuspocusProvider({
+    url: 'ws://localhost:1234',
+    name: docId,
+    document: ydoc,
+    token
+  });
+
+
   const editor = useEditor({
     immediatelyRender:false,
     extensions: [

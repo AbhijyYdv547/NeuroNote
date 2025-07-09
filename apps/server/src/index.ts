@@ -100,6 +100,13 @@ app.post("/room",middleware,async (req,res)=>{
             adminId:userId
         }
     })
+
+    await prismaClient.roomMembership.create({
+        data: {
+          userId,
+          roomId: room.id,
+        },
+      });
     res.json({
         roomId: room.id
     })
@@ -162,16 +169,45 @@ app.get("/chats/:roomId", async (req, res) => {
   }
 });
 
-app.get("/room/:slug",async (req,res)=>{
-    const slug = req.params.slug;
-    const room = await prismaClient.room.findFirst({
-        where:{
-            slug
+app.get("/room/:slug", middleware, async (req, res) => {
+    try {
+      const slug = req.params.slug;
+      //@ts-ignore
+      const userId: number = req.userId;
+  
+      const room = await prismaClient.room.findFirst({ where: { slug } });
+  
+      if (!room) {
+        res.status(404).json({ message: "Room not found" });
+        return;
+      }
+  
+      // Log info
+      console.log("🟢 Found room:", room);
+      console.log("🔐 Upserting membership for user:", userId);
+  
+      await prismaClient.roomMembership.upsert({
+        where: {
+          userId_roomId: {
+            userId,
+            roomId: room.id,
+          },
         },
-    })
-    res.json({
-        room
-    })
-})
+        update: {},
+        create: {
+          userId,
+          roomId: room.id,
+        },
+      });
+  
+      res.json({ room });
+    } catch (err: any) {
+      console.error("❌ [/room/:slug] Error:", err.message);
+      console.error(err); // Full error object
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+  
+  
 
 app.listen(3001);

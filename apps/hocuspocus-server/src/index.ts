@@ -8,14 +8,26 @@ import { JWT_SECRET } from "@repo/backend-common/config";
 const server = Server.configure({
   port: 1234,
 
-  onAuthenticate: async ({ token }) => {
-  if (!token) throw new Error("Missing token");
-
-  const payload = jwt.verify(token, JWT_SECRET) as JwtPayload;
-  if (!payload?.userId) throw new Error("Invalid token");
-
-  console.log("🔐 Authenticated:", payload.userId);
-},
+  onAuthenticate: async ({ token, documentName }) => {
+    if (!token) throw new Error("Missing token");
+  
+    const payload = jwt.verify(token, JWT_SECRET) as JwtPayload;
+    const userId = payload?.userId;
+  
+    const membership = await prismaClient.roomMembership.findFirst({
+      where: {
+        userId,
+        roomId: parseInt(documentName), // roomId is expected to be the same as documentName
+      },
+    });
+  
+    if (!membership) {
+      throw new Error("Access denied to this room");
+    }
+  
+    console.log(`✅ User ${userId} joined room ${documentName}`);
+  },
+  
 
 
   // 🧠 Save document content when it's updated

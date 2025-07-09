@@ -41,7 +41,13 @@ export default function Dashboard() {
 
     async function joinRoom() {
         setLoadingJoin(true);
-        const res = await fetch(`http://localhost:3001/room/${roomSlug}`);
+      const res = await fetch(`http://localhost:3001/room/${roomSlug}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
+        }
+      });
         const data = await res.json();
         setLoadingJoin(false);
 
