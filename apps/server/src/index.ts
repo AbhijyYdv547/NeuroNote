@@ -51,7 +51,7 @@ app.post("/signin", async (req, res) => {
   }
 
   try {
-    console.log("Parsed email:", parsedData.data.email);
+    
     const user = await prismaClient.user.findFirst({
       where: {
         email: parsedData.data.email
@@ -79,7 +79,7 @@ app.post("/signin", async (req, res) => {
       token
     })
   } catch (e) {
-    console.error("Sign-in error:", e);
+
     res.status(500).json({ message: "Internal server error" });
   }
 
@@ -138,7 +138,7 @@ app.get("/rooms", middleware, async (req, res) => {
         admin: true,
       },
     });
-    console.log(rooms);
+
     if (rooms.length === 0) {
       res.status(404).json({
         message: "No rooms found"
@@ -182,7 +182,7 @@ app.get("/chats/:roomId", async (req, res) => {
       nextCursor: messages.length ? messages[messages.length - 1]!.id : null
     });
   } catch (e) {
-    console.error("Error fetching messages:", e);
+
     res.status(500).json({ message: "Failed to fetch messages" });
   }
 });
@@ -228,7 +228,7 @@ app.post("/join-room", middleware, async (req, res) => {
     res.json({ room });
     return;
   } catch (err: any) {
-    console.error("❌ [POST /join-room] Error:", err.message);
+
     res.status(500).json({ message: "Internal server error" });
     return;
   }
@@ -263,7 +263,7 @@ app.get("/room/:id", middleware, async (req, res) => {
 
     res.json({ room });
   } catch (err) {
-    console.error("Error fetching room by ID:", err);
+
     res.status(500).json({ message: "Internal server error" });
   }
 });
