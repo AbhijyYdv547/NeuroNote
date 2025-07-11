@@ -246,13 +246,15 @@ app.get("/room/:id", middleware, async (req, res) => {
     const userId = req.userId;
 
     const room = await prismaClient.room.findFirst({
-      where: {
-        id: roomId,
-        members: {
-          some: { userId },
-        },
+  where: {
+    id: roomId,
+    members: {
+      some: {
+        userId: userId,
       },
-    });
+    },
+  },
+});
 
     if (!room) {
       res.status(403).json({ message: "Access denied or room not found" });
