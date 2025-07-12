@@ -1,4 +1,4 @@
-export async function signInUser(form: { email: string; password: string }) {
+export async function logInUser(form: { email: string; password: string }) {
   const res = await fetch("http://localhost:3001/signin", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

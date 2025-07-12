@@ -5,25 +5,25 @@ import AuthPage from "../../../components/AuthPage";
 import { useRedirectIfLoggedIn } from "../../../hooks/useRedirectIfLoggedIn";
 import { setToken } from "../../../hooks/useAuthToken";
 import toast from "react-hot-toast";
-import { signInUser } from "../../../lib/api";
+import { logInUser } from "../../../lib/api";
 
-export default function Signin() {
+export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   useRedirectIfLoggedIn();
 
-  async function handleSignin() {
+  async function handleLogin() {
     setLoading(true);
     try {
-      const data = await signInUser(form);
+      const data = await logInUser(form);
       if (data.token) {
         setToken(data.token);
-        toast.success("Signed in successfully!");
+        toast.success("Logged in successfully!");
         setTimeout(() => router.push("/dashboard"), 1500);
       } else {
-        toast.error(data.message || "Signin failed!");
+        toast.error(data.message || "Login failed!");
       }
     } catch {
       toast.error("Something went wrong. Try again!");
@@ -56,8 +56,8 @@ export default function Signin() {
         className="input"
         onChange={(e) => setForm({ ...form, password: e.target.value })}
       />
-      <button className="btn" onClick={handleSignin} disabled={loading}>
-        {loading ? "Signing in..." : "Sign In"}
+      <button className="btn" onClick={handleLogin} disabled={loading}>
+        {loading ? "Logging in..." : "Log In"}
       </button>
     </AuthPage>
   );
