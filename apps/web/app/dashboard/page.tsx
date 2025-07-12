@@ -125,7 +125,7 @@ export default function Dashboard() {
 
   function handleLogout() {
     clearToken();
-    router.push("/signin");
+    router.push("/login");
   }
 
   return (

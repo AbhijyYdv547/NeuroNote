@@ -8,7 +8,6 @@ import StarterKit from "@tiptap/starter-kit";
 import { getToken } from "../hooks/useAuthToken";
 
 
-
 export const Editor = ({ docId }: { docId: string }) => {
 
   const token = getToken();
