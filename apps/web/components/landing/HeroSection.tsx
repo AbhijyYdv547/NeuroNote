@@ -1,75 +1,55 @@
-"use client";
-
-import { motion } from "framer-motion";
-import Link from "next/link";
+import Link from "next/link"; // Correct import for Next.js
 
 const HeroSection = () => {
     return (
-        <section className="py-20 bg-background text-foreground px-4 sm:px-8 lg:px-16">
-            <motion.div
-                className="max-w-5xl mx-auto text-center space-y-8"
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7 }}
-            >
-                {/* Heading */}
-                <motion.h1
-                    className="text-4xl sm:text-6xl font-bold leading-tight tracking-tight"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
+        <div className="flex flex-col items-center mt-6 lg:mt-20">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide">
+                NeuroNote: AI-powered
+                <span className="bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
+                    {" "}
+                    collaborative notes
+                </span>
+            </h1>
+            <p className="mt-10 text-lg text-center text-neutral-500 max-w-4xl">
+                Transform your team's productivity with intelligent note-taking. Real-time collaboration,
+                AI-powered content enhancement, and seamless synchronization - all in one beautiful interface.
+                Start collaborating smarter today!
+            </p>
+            <div className="flex justify-center my-10">
+                <Link
+                    href="/signup"
+                    className="bg-gradient-to-r from-blue-500 to-blue-700 py-3 px-4 mx-3 rounded-md text-white font-medium hover:from-blue-600 hover:to-blue-800 transition-all duration-200"
                 >
-                    Build <span className="text-blue-500">together</span> in real time
-                </motion.h1>
-
-                {/* Subheading */}
-                <motion.p
-                    className="text-muted-foreground text-lg sm:text-xl max-w-3xl mx-auto"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.35 }}
+                    Start for free
+                </Link>
+                <Link
+                    href="/docs"
+                    className="py-3 px-4 mx-3 rounded-md border border-neutral-300 text-neutral-700 hover:bg-neutral-50 transition-all duration-200"
                 >
-                    NeuroNote is your collaborative hub for team productivity — write, chat, brainstorm and ship ideas faster with one simple tool.
-                </motion.p>
-
-                {/* CTA Buttons */}
-                <motion.div
-                    className="flex flex-col sm:flex-row justify-center gap-4 pt-4"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
+                    Learn more
+                </Link>
+            </div>
+            <div className="flex mt-10 justify-center">
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    className="rounded-lg w-1/2 border border-blue-500 shadow-sm shadow-blue-400 mx-2 my-4"
                 >
-                    <Link href="/signup">
-                        <button className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition">
-                            Start for Free
-                        </button>
-                    </Link>
-                    <Link href="/docs">
-                        <button className="px-6 py-3 border border-border rounded-xl hover:bg-accent transition text-sm">
-                            See Documentation
-                        </button>
-                    </Link>
-                </motion.div>
-
-                {/* Optional: Hero Video Block */}
-                <motion.div
-                    className="mt-12 flex flex-col sm:flex-row justify-center gap-6"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.65 }}
+                    <source src="/videos/video1.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+                <video
+                    autoPlay
+                    loop
+                    muted
+                    className="rounded-lg w-1/2 border border-blue-500 shadow-sm shadow-blue-400 mx-2 my-4"
                 >
-                    <video
-                        autoPlay
-                        muted
-                        loop
-                        className="rounded-lg border border-blue-600 w-full sm:w-1/2 shadow-lg"
-                    >
-                        <source src="/videos/neuronote-demo.mp4" type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
-                </motion.div>
-            </motion.div>
-        </section>
+                    <source src="/videos/video2.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
     );
 };
 

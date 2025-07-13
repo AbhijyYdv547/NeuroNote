@@ -37,7 +37,7 @@ const Workflow = () => {
                     viewport={{ once: true }}
                 >
                     <Image
-                        src="/images/neuronote-code.png"
+                        src="/photos/code.jpg"
                         alt="Code Collaboration"
                         width={600}
                         height={400}
