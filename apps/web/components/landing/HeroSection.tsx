@@ -2,7 +2,7 @@ import Link from "next/link"; // Correct import for Next.js
 
 const HeroSection = () => {
     return (
-        <div className="flex flex-col items-center mt-6 lg:mt-20">
+        <div className="flex flex-col items-center mt-6 lg:mt-20" id="hero">
             <h1 className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide">
                 NeuroNote: AI-powered
                 <span className="bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
