@@ -84,8 +84,10 @@ import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import { getToken } from "../../../hooks/useAuthToken"; // adjust path
 
 
+
 interface SimpleEditorProps {
   docId: string;
+  userId: string;
 }
 
 const MainToolbarContent = ({
@@ -193,8 +195,11 @@ const MobileToolbarContent = ({
   </>
 )
 
-export function SimpleEditor({ docId }: SimpleEditorProps) {
+export function SimpleEditor({ docId,userId }: SimpleEditorProps) {
   const token = getToken();
+  if (!token) {
+    return <div>Authentication required</div>;
+  }
   
     const ydoc = new Y.Doc();
   
@@ -251,8 +256,8 @@ export function SimpleEditor({ docId }: SimpleEditorProps) {
             CollaborationCursor.configure({
               provider,
               user: {
-                name: "User " + Math.floor(Math.random() * 1000),
-                color: `hsl(${Math.random() * 360}, 100%, 75%)`,
+                name: `User: ${userId}`,
+                color: `hsl(0, 82%, 56%)`,
             },
         }),
     ],
