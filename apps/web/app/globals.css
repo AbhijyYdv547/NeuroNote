@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+@import '../styles/_variables.scss';
+@import '../styles/_keyframe-animations.scss';
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
