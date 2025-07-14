@@ -13,6 +13,10 @@
 * 🧠 AI-powered summarization and suggestions using Gemini API
 * 📤 Chat function to communicate with team members
 * 💾 Persistent storage with PostgreSQL and Prisma ORM
+* 🏷️ **Secret code-based room joining**:
+  - A **secret code** is generated when a room is created
+  - Users **must enter this code** to join a room for the first time
+  - Once joined, the room will be listed in their dashboard and can be rejoined **without needing the code again**
 * 💻 Responsive, clean UI with smooth animations (Framer Motion)
 
 ---
@@ -43,25 +47,24 @@
 ## 📸 Screenshots
 
 ### ✨ Landing Page
-
-![dashboard](https://github.com/user-attachments/assets/your-image-id)
+![landing](https://github.com/user-attachments/assets/421bb724-3da5-44ab-a34c-9657ab590c85)
 
 ### ✨ Login and Signup pages
 
-![dashboard](https://github.com/user-attachments/assets/your-image-id)
-
+![login](https://github.com/user-attachments/assets/e1f734b4-471e-4a19-84a5-c841fb9a7f3c)
+![signup](https://github.com/user-attachments/assets/167305d2-b97a-4bdd-8339-339d175d1785)
 
 ### ✨ Dashboard
+![dashboard](https://github.com/user-attachments/assets/8c9b61dc-89ba-4413-b7ab-43d4054b26f4)
 
-![dashboard](https://github.com/user-attachments/assets/your-image-id)
 
 ### 📝 Collaborative Editor
+![Room](https://github.com/user-attachments/assets/a6453049-a5df-4b7d-b2a3-78b81b504ccd)
 
-![editor](https://github.com/user-attachments/assets/your-image-id)
 
 ### 📝 Room Chat function
 
-![editor](https://github.com/user-attachments/assets/your-image-id)
+![chat](https://github.com/user-attachments/assets/b5861e58-cbd7-4baa-b437-19ce6984ec8d)
 
 ### 💡 AI Summarization
 
@@ -130,8 +133,8 @@ packages/
 
 Interested in contributing or sharing feedback? Feel free to connect:
 
-* 📫 Email: `yadavabhijay@gmail.com`
+* 📫 Email: yadavabhjay@gmail.com
 * 🌐 [Portfolio](#)
-* 💼 [LinkedIn]()
+* 💼 [LinkedIn](https://linkedin.com/in/abj-ydv)
 
 ---
