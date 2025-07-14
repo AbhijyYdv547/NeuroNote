@@ -59,12 +59,11 @@
 
 
 ### 📝 Collaborative Editor
-![Room](https://github.com/user-attachments/assets/a6453049-a5df-4b7d-b2a3-78b81b504ccd)
+![room1](https://github.com/user-attachments/assets/ded6da2d-caa4-40e7-b0cf-36d7c8fe6223)
 
 
 ### 📝 Room Chat function
-
-![chat](https://github.com/user-attachments/assets/b5861e58-cbd7-4baa-b437-19ce6984ec8d)
+![chat](https://github.com/user-attachments/assets/e7432b14-85de-4dcf-be77-604e4fddc16f)
 
 ### 💡 AI Summarization
 
