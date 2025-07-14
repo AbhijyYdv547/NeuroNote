@@ -18,9 +18,8 @@ export default function Dashboard() {
   const [loadingJoin, setLoadingJoin] = useState(false);
   const [loadingShow, setLoadingShow] = useState(false);
   const [rooms, setRooms] = useState([]);
-  const [secretCode, setSecretCode] = useState(""); // To hold secretCode
+  const [secretCode, setSecretCode] = useState(""); 
   const [copySuccess, setCopySuccess] = useState("");
-  const[roomId,setRoomId] = useState("");
   const router = useRouter();
   const token = getToken();
 
