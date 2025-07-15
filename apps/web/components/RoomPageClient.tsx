@@ -5,9 +5,11 @@ import ChatRoomClient from "../components/ChatRoomClient";
 import { Editor } from "../components/Editor";
 import { clearToken } from '../hooks/useAuthToken';
 import { useRouter } from "next/navigation";
+import SummarizationBox from './SummarizationBox';
 
 export default function RoomPage({ roomId }: { roomId:string}) {
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isSumOpen, setIsSumOpen] = useState(false);
   const router = useRouter();
 
   const handleLogout = ()=> {
@@ -17,10 +19,18 @@ export default function RoomPage({ roomId }: { roomId:string}) {
 
   const toggleChat = () => {
     setIsChatOpen(!isChatOpen);
+    setIsSumOpen(false);
+  };
+
+  const toggleSum = () => {
+    setIsChatOpen(false)
+    setIsSumOpen(!isSumOpen);
+    
   };
 
   return (
     <div className="h-screen flex flex-col bg-black">
+
       {/* Top Navigation Bar */}
       <nav className="bg-black shadow-sm border-b border-gray-200 px-4 py-3 flex justify-between items-center z-20">
         {/* Left side - Logo/Title */}
@@ -35,6 +45,23 @@ export default function RoomPage({ roomId }: { roomId:string}) {
 
         {/* Right side - Action buttons */}
         <div className="flex items-center space-x-3">
+
+          {/* AI Summarization Button */}
+          <button
+            onClick={toggleSum}
+            className={`p-2 rounded-lg transition-all duration-200 ${isSumOpen
+              ? 'bg-blue-100 text-orange-600 hover:bg-orange-200'
+              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              }`}
+            title="Toggle Summarizer"
+          >
+            <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+            </svg>
+
+          </button>
+
+
           {/* Chat Toggle Button */}
           <button
             onClick={toggleChat}
@@ -86,7 +113,7 @@ export default function RoomPage({ roomId }: { roomId:string}) {
       <div className="flex-1 flex overflow-auto">
         {/* Editor Section */}
         <div
-          className={`flex-1 transition-all duration-300 ease-in-out ${isChatOpen ? 'mr-80' : 'mr-0'
+          className={`flex-1 transition-all duration-300 ease-in-out ${isChatOpen || isSumOpen ? 'mr-80' : 'mr-0'
             }`}
         >
           <div className="h-full p-4">
@@ -113,6 +140,26 @@ export default function RoomPage({ roomId }: { roomId:string}) {
           <div
             className="fixed inset-0 bg-black bg-opacity-50 z-5 lg:hidden md:hidden"
             onClick={toggleChat}
+          />
+        )}
+
+        {/* Summarization Sidebar */}
+        <div
+          className={`fixed right-0 top-16 bottom-0 w-80 h-full shadow-lg border-l border-gray-200 transform transition-transform duration-300 ease-in-out z-10 ${isSumOpen ? 'translate-x-0' : 'translate-x-full'
+            }`}
+        >
+          
+          {/* Summarization Content */}
+          <div className="h-full pb-16">
+            <SummarizationBox roomId={roomId} />
+          </div>
+        </div>
+
+        {/* Overlay for mobile */}
+        {isSumOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-5 lg:hidden md:hidden"
+            onClick={toggleSum}
           />
         )}
       </div>
