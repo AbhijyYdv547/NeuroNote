@@ -275,28 +275,67 @@ app.get("/room/:id", middleware, async (req, res) => {
 });
 
 app.post("/summarize", middleware, async (req, res) => {
-  try{
-    console.log(req.body);
+  try {
     const { content } = req.body;
 
-    if (!content){
+    if (!content) {
       res.status(400).json({ message: "Missing content" });
-      console.log("Missing content")
       return;
-    } 
-    const prompt = `Summarize the following text in about 50 words and mention the tone of the text:\n\n${content}`;
+    }
+    const prompt = `Please summarize the following text in **approximately 50 words**. After the summary, clearly state the **tone of the text** (e.g., formal, informative, emotional, etc.).
+          Text:
+          "${content}"`;
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: [{ role: "user", parts: [{ text: prompt }] }],
     });
 
     const summary = response.candidates?.[0]?.content?.parts?.[0]?.text || "Summary generation failed.";
-    console.log("summary generated");
     res.status(200).json(
-      {summary}
+      { summary }
     )
-  }catch(e){
-    console.log("error");
+  } catch (e) {
+    res.status(500).json({
+      message: "Some error occured"
+    })
+  }
+});
+
+app.post("/check-grammar", middleware, async (req, res) => {
+  try {
+    const { content } = req.body;
+
+    if (!content) {
+      res.status(400).json({ message: "Missing content" });
+      return;
+    }
+    const prompt = `Please check the following text for grammatical errors. Keep your response concise — no more than 50 words total.
+
+          For each issue you find:
+          1. Mention the incorrect phrase.
+          2. Provide the corrected version.
+          3. Briefly explain the issue.
+
+          Format your response with clear spacing and line breaks like this:
+
+          Incorrect: "your example"
+          Correct: "your example fixed"
+          Issue: Brief explanation here.
+
+          Text to check:
+
+          "${content}"`;
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+    });
+
+    const grammar = response.candidates?.[0]?.content?.parts?.[0]?.text || "Grammar summary generation failed.";
+    res.status(200).json(
+      { grammar }
+    )
+  } catch (e) {
     res.status(500).json({
       message: "Some error occured"
     })
