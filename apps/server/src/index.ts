@@ -7,6 +7,12 @@ import { prismaClient } from "@repo/db/client"
 import cors from "cors"
 import bcrypt from "bcrypt"
 import { generateAlphanumericCode } from "./genSecret"
+import { GoogleGenAI } from "@google/genai";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY as string });
 
 const app = express();
 app.use(express.json())
@@ -51,7 +57,7 @@ app.post("/signin", async (req, res) => {
   }
 
   try {
-    
+
     const user = await prismaClient.user.findFirst({
       where: {
         email: parsedData.data.email
@@ -246,15 +252,15 @@ app.get("/room/:id", middleware, async (req, res) => {
     const userId = req.userId;
 
     const room = await prismaClient.room.findFirst({
-  where: {
-    id: roomId,
-    members: {
-      some: {
-        userId: userId,
+      where: {
+        id: roomId,
+        members: {
+          some: {
+            userId: userId,
+          },
+        },
       },
-    },
-  },
-});
+    });
 
     if (!room) {
       res.status(403).json({ message: "Access denied or room not found" });
@@ -268,6 +274,31 @@ app.get("/room/:id", middleware, async (req, res) => {
   }
 });
 
+app.post("/summarize", middleware, async (req, res) => {
+  try{
+    const {content} = req.body;
+
+    if (!content){
+      res.status(400).json({ message: "Missing content" });
+      return;
+    } 
+    const prompt = `Summarize the following text in about 50 words and mention the tone of the text:\n\n${content}`;
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+    });
+
+    const summary = response.candidates?.[0]?.content?.parts?.[0]?.text || "Summary generation failed.";
+
+    res.status(200).json(
+      {summary}
+    )
+  }catch(e){
+    res.status(500).json({
+      message: "Some error occured"
+    })
+  }
+});
 
 
 app.listen(3001);
