@@ -83,6 +83,8 @@ import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import { getToken } from "../../../hooks/useAuthToken"; // adjust path
 
+export const [docContent,setDocContent] = React.useState<string>();
+
 
 
 interface SimpleEditorProps {
@@ -264,6 +266,8 @@ export function SimpleEditor({ docId,userId }: SimpleEditorProps) {
     content: content,
   })
 
+  setDocContent(editor?.getText());
+
   const bodyRect = useCursorVisibility({
     editor,
     overlayHeight: toolbarRef.current?.getBoundingClientRect().height ?? 0,
@@ -311,3 +315,4 @@ export function SimpleEditor({ docId,userId }: SimpleEditorProps) {
     </EditorContext.Provider>
   )
 }
+
