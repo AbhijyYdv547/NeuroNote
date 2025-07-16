@@ -10,6 +10,7 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
     const token = getToken();
 
       const [summary, setSummary] = useState<string>();
+      const [grammar,setGrammar] = useState<string>();
       const bottomRef = useRef<HTMLDivElement | null>(null);
       const [loading,setLoading] = useState(false);
 
@@ -34,6 +35,27 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
           }
       }
 
+      const checkGrammar = async ()=>{
+          console.log("Sending content to summarize:", docContent);
+          setLoading(true);
+          try {
+              const res = await fetch(`http://localhost:3001/check-grammar`, {
+                  method: "POST",
+                  headers: {
+                      "Content-Type": "application/json",
+                      Authorization: `${token}`,
+                  },
+                  body: JSON.stringify({ content: docContent }),
+              });
+              const data = await res.json();
+              setSummary(data.grammar)
+          } catch (err) {
+              alert("Error joining room");
+          } finally {
+              setLoading(false);
+          }
+      }
+
     return (
         <div className="h-full flex flex-col bg-zinc-950 text-white min-h-0">
             
@@ -44,6 +66,13 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
                         <div className="p-4 bg-zinc-900 rounded mt-4">
                             <h2 className="text-lg font-semibold">📄 Summary</h2>
                             <p>{summary}</p>
+                        </div>
+                    )}
+
+                    {grammar && (
+                        <div className="p-4 bg-zinc-900 rounded mt-4">
+                            <h2 className="text-lg font-semibold">📄 Grammar Check</h2>
+                            <p>{grammar}</p>
                         </div>
                     )}
                     <div ref={bottomRef} />
@@ -58,6 +87,18 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
                     >
                     <div>
                         Summarize document 
+                    </div>
+                    <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className='h-5 w-5'>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+
+                    </button>
+                    <button
+                        className="bg-blue-600 px-3 py-2 rounded hover:bg-blue-700 text-sm font-medium flex gap-1"
+                        onClick={checkGrammar}
+                    >
+                    <div>
+                        Check Grammar 
                     </div>
                     <svg fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className='h-5 w-5'>
                         <path strokeLinecap="round" strokeLinejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
