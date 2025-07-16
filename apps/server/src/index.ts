@@ -276,10 +276,12 @@ app.get("/room/:id", middleware, async (req, res) => {
 
 app.post("/summarize", middleware, async (req, res) => {
   try{
-    const {content} = req.body;
+    console.log(req.body);
+    const { content } = req.body;
 
     if (!content){
       res.status(400).json({ message: "Missing content" });
+      console.log("Missing content")
       return;
     } 
     const prompt = `Summarize the following text in about 50 words and mention the tone of the text:\n\n${content}`;
@@ -289,11 +291,12 @@ app.post("/summarize", middleware, async (req, res) => {
     });
 
     const summary = response.candidates?.[0]?.content?.parts?.[0]?.text || "Summary generation failed.";
-
+    console.log("summary generated");
     res.status(200).json(
       {summary}
     )
   }catch(e){
+    console.log("error");
     res.status(500).json({
       message: "Some error occured"
     })

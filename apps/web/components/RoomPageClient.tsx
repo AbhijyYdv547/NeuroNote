@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import SummarizationBox from './SummarizationBox';
 
 export default function RoomPage({ roomId }: { roomId:string}) {
+  const [docContent, setDocContent] = useState<string>();
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isSumOpen, setIsSumOpen] = useState(false);
   const router = useRouter();

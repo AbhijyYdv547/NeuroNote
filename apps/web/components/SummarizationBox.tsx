@@ -1,10 +1,12 @@
 "use client";
 
 import { getToken } from '@/hooks/useAuthToken';
+import { useDocContentStore } from '@/store/DocContentStore';
 import React, { useRef, useState } from 'react'
-import { docContent } from './tiptap-templates/simple/simple-editor';
+
 
 const SummarizationBox = ({ roomId }: { roomId: string }) => {
+    const docContent = useDocContentStore((state) => state.docContent)
     const token = getToken();
 
       const [summary, setSummary] = useState<string>();
@@ -12,6 +14,7 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
       const [loading,setLoading] = useState(false);
 
       const summarizeDoc = async ()=>{
+          console.log("Sending content to summarize:", docContent);
           setLoading(true);
           try {
               const res = await fetch(`http://localhost:3001/summarize`, {
@@ -37,7 +40,12 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0">
                 <div className="space-y-3 custom-scrollbar">
-                    {summary}
+                    {summary && (
+                        <div className="p-4 bg-zinc-900 rounded mt-4">
+                            <h2 className="text-lg font-semibold">📄 Summary</h2>
+                            <p>{summary}</p>
+                        </div>
+                    )}
                     <div ref={bottomRef} />
                 </div>
             </div>
