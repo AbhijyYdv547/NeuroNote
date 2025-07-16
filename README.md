@@ -10,14 +10,14 @@
 * 🔐 User authentication (Signup/Login)
 * ✍️ Rich-text editor with Tiptap (supports Markdown, embeds, mentions)
 * 🔁 Real-time collaboration with conflict resolution via Hocuspocus
-* 🧠 AI-powered summarization and suggestions using Gemini API
+* 🧠 AI-powered summarization and grammar checks using Gemini API
 * 📤 Chat function to communicate with team members
 * 💾 Persistent storage with PostgreSQL and Prisma ORM
 * 🏷️ **Secret code-based room joining**:
   - A **secret code** is generated when a room is created
   - Users **must enter this code** to join a room for the first time
   - Once joined, the room will be listed in their dashboard and can be rejoined **without needing the code again**
-* 💻 Responsive, clean UI with smooth animations (Framer Motion)
+* 💻 Responsive, clean UI with smooth animations
 
 ---
 
@@ -121,8 +121,8 @@ packages/
 
 ## ✅ TODOs
 
+* [X] Add AI assistant with summarization
 * [ ] Dockerize the app
-* [ ] Add AI assistant with summarization
 * [ ] Deploy full-stack app
 * [ ] Add note version history
 
