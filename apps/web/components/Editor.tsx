@@ -1,9 +1,10 @@
 "use client";
 import { useUserData } from "@/hooks/useUserData";
 import { SimpleEditor } from "./tiptap-templates/simple/simple-editor";
+import { useState } from "react";
 
 
-export const Editor = ({ docId}: { docId: string}) => {
+export const Editor = ({ docId }: { docId: string }) => {
   const {currentUser,loading} = useUserData();
 
   if(loading){

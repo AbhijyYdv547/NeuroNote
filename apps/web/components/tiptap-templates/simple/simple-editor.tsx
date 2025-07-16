@@ -82,6 +82,9 @@ import { HocuspocusProvider } from '@hocuspocus/provider';
 import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import { getToken } from "../../../hooks/useAuthToken"; // adjust path
+import { useDocContentStore } from "@/store/DocContentStore"
+
+
 
 
 
@@ -196,6 +199,8 @@ const MobileToolbarContent = ({
 )
 
 export function SimpleEditor({ docId,userId }: SimpleEditorProps) {
+  const setDocContent = useDocContentStore((state) => state.setDocContent)
+  
   const token = getToken();
   if (!token) {
     return <div>Authentication required</div>;
@@ -264,6 +269,24 @@ export function SimpleEditor({ docId,userId }: SimpleEditorProps) {
     content: content,
   })
 
+  React.useEffect(() => {
+    if (!editor) return;
+
+    // set content whenever editor updates
+    const update = () => {
+      const text = editor.getText();
+      console.log("Editor content updated:", text); // 🔍 Debug log
+      setDocContent(text);
+    }
+
+    update(); // Initial run
+
+    editor.on('update', update); // Listen for live changes
+
+    () => editor.off('update', update); // Clean up
+  }, [editor])
+
+
   const bodyRect = useCursorVisibility({
     editor,
     overlayHeight: toolbarRef.current?.getBoundingClientRect().height ?? 0,
@@ -311,3 +334,4 @@ export function SimpleEditor({ docId,userId }: SimpleEditorProps) {
     </EditorContext.Provider>
   )
 }
+
