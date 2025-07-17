@@ -18,7 +18,7 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
           console.log("Sending content to summarize:", docContent);
           setLoading(true);
           try {
-              const res = await fetch(`http://localhost:3001/summarize`, {
+              const res = await fetch(`http://localhost:3001/api/room/summarize`, {
                   method: "POST",
                   headers: {
                       "Content-Type": "application/json",
@@ -39,7 +39,7 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
           console.log("Sending content to summarize:", docContent);
           setLoading(true);
           try {
-              const res = await fetch(`http://localhost:3001/check-grammar`, {
+              const res = await fetch(`http://localhost:3001/api/room/check-grammar`, {
                   method: "POST",
                   headers: {
                       "Content-Type": "application/json",

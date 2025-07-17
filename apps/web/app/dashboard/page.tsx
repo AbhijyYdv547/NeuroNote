@@ -31,7 +31,7 @@ export default function Dashboard() {
     setLoadingCreate(true);
     setCopySuccess("");
     try {
-      const res = await fetch("http://localhost:3001/room", {
+      const res = await fetch("http://localhost:3001/api/dashboard/room", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,7 +59,7 @@ export default function Dashboard() {
   async function joinRoom() {
     setLoadingJoin(true);
     try {
-      const res = await fetch(`http://localhost:3001/join-room`, {
+      const res = await fetch(`http://localhost:3001/api/dashboard/join-room`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -82,7 +82,7 @@ export default function Dashboard() {
 
   async function showRooms() {
     setLoadingShow(true);
-    const res = await fetch(`http://localhost:3001/rooms`, {
+    const res = await fetch(`http://localhost:3001/api/dashboard/rooms`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -102,7 +102,7 @@ export default function Dashboard() {
   async function joinRoomviaId(roomId:number){
     setLoadingJoin(true);
     try {
-      const res = await fetch(`http://localhost:3001/room/${roomId}`, {
+      const res = await fetch(`http://localhost:3001/api/dashboard/room/${roomId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

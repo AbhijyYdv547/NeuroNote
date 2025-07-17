@@ -91,7 +91,7 @@ export default function ChatBox({ roomId }: { roomId: string }) {
     };
 
     // Fetch chat history
-    fetch(`http://localhost:3001/chats/${roomId}`)
+    fetch(`http://localhost:3001/api/room/chats/${roomId}`)
       .then((res) => res.json())
       .then((data) => {
         const formattedMessages = (data.messages || []).map((msg: any) => ({
