@@ -1,5 +1,6 @@
 "use client";
 
+import { backendURL } from '@/config/url';
 import { getToken } from '@/hooks/useAuthToken';
 import { useDocContentStore } from '@/store/DocContentStore';
 import React, { useEffect, useRef, useState } from 'react'
@@ -18,7 +19,7 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
           console.log("Sending content to summarize:", docContent);
           setLoading(true);
           try {
-              const res = await fetch(`http://localhost:3001/summarize`, {
+              const res = await fetch(`${backendURL}/api/room/summarize`, {
                   method: "POST",
                   headers: {
                       "Content-Type": "application/json",
@@ -39,7 +40,7 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
           console.log("Sending content to summarize:", docContent);
           setLoading(true);
           try {
-              const res = await fetch(`http://localhost:3001/check-grammar`, {
+              const res = await fetch(`${backendURL}/api/room/check-grammar`, {
                   method: "POST",
                   headers: {
                       "Content-Type": "application/json",

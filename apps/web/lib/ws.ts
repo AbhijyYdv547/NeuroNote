@@ -1,7 +1,9 @@
+import { wsURL } from "@/config/url";
+
 let socket: WebSocket | null = null;
 
 export function connectToRoom(roomId: string, token: string) {
-  socket = new WebSocket(`ws://localhost:8080?token=${token}`);
+  socket = new WebSocket(`${wsURL}?token=${token}`);
 
   socket.onopen = () => {
     socket?.send(JSON.stringify({ type: "join_room", roomId }));

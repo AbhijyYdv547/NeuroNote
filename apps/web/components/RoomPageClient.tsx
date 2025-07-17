@@ -1,9 +1,9 @@
 'use client';
 
 import { use, useState } from 'react';
-import ChatRoomClient from "../components/ChatRoomClient";
-import { Editor } from "../components/Editor";
-import { clearToken } from '../hooks/useAuthToken';
+import ChatRoomClient from "@/components/ChatRoomClient";
+import { Editor } from "@/components/Editor";
+import { clearToken } from '@/hooks/useAuthToken';
 import { useRouter } from "next/navigation";
 import SummarizationBox from './SummarizationBox';
 

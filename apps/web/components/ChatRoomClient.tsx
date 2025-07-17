@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { getToken } from "../hooks/useAuthToken";
+import { getToken } from "@/hooks/useAuthToken";
 import ChatBox from "./ChatBox";
 
 export default function ChatRoomClient({ roomId }: { roomId: string }) {

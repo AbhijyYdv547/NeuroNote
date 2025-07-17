@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { getToken } from "../hooks/useAuthToken";
 import { jwtDecode } from "jwt-decode";
+import { backendURL, wsURL } from "@/config/url";
 
 interface TokenPayload {
   userId: string;
@@ -46,7 +47,7 @@ export default function ChatBox({ roomId }: { roomId: string }) {
     const token = getToken();
     if (!token) return;
 
-    const ws = new WebSocket(`ws://localhost:8080?token=${token}`);
+    const ws = new WebSocket(`${wsURL}?token=${token}`);
 
     ws.onopen = () => {
       ws.send(JSON.stringify({ type: "join_room", roomId }));
@@ -91,7 +92,7 @@ export default function ChatBox({ roomId }: { roomId: string }) {
     };
 
     // Fetch chat history
-    fetch(`http://localhost:3001/chats/${roomId}`)
+    fetch(`${backendURL}/api/room/chats/${roomId}`)
       .then((res) => res.json())
       .then((data) => {
         const formattedMessages = (data.messages || []).map((msg: any) => ({

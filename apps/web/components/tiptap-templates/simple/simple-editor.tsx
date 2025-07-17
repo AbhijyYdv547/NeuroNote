@@ -83,6 +83,7 @@ import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import { getToken } from "../../../hooks/useAuthToken"; // adjust path
 import { useDocContentStore } from "@/store/DocContentStore"
+import { hocuspocusURL } from "@/config/url"
 
 
 
@@ -209,7 +210,7 @@ export function SimpleEditor({ docId,userId }: SimpleEditorProps) {
     const ydoc = new Y.Doc();
   
     const provider = new HocuspocusProvider({
-      url: 'ws://localhost:1234',
+      url: `${hocuspocusURL}`,
       name: docId,
       document: ydoc,
       token

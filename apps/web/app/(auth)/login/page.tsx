@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import AuthPage from "../../../components/AuthPage";
-import { useRedirectIfLoggedIn } from "../../../hooks/useRedirectIfLoggedIn";
-import { setToken } from "../../../hooks/useAuthToken";
+import AuthPage from "@/components/AuthPage";
+import { useRedirectIfLoggedIn } from "@/hooks/useRedirectIfLoggedIn";
+import { setToken } from "@/hooks/useAuthToken";
 import toast from "react-hot-toast";
-import { logInUser } from "../../../lib/api";
+import { logInUser } from "@/lib/api";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
