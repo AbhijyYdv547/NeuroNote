@@ -1,5 +1,7 @@
+import { backendURL } from "@/config/url";
+
 export async function logInUser(form: { email: string; password: string }) {
-  const res = await fetch("http://localhost:3001/api/auth/login", {
+  const res = await fetch(`${backendURL}/api/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(form),
@@ -12,7 +14,7 @@ export async function signUpUser(form: {
   password: string;
   name: string;
 }) {
-  const res = await fetch("http://localhost:3001/api/auth/signup", {
+  const res = await fetch(`${backendURL}/api/auth/signup`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(form),

@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import AuthPage from "../../../components/AuthPage";
-import { useRedirectIfLoggedIn } from "../../../hooks/useRedirectIfLoggedIn";
+import AuthPage from "@/components/AuthPage";
+import { useRedirectIfLoggedIn } from "@/hooks/useRedirectIfLoggedIn";
 import toast from "react-hot-toast";
-import { signUpUser } from "../../../lib/api";
+import { signUpUser } from "@/lib/api";
 
 export default function Signup() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });

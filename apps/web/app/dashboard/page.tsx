@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import { getToken, clearToken } from "../../hooks/useAuthToken";
 import { useRouter } from "next/navigation";
+import { backendURL } from "@/config/url";
+
 
 export default function Dashboard() {
 
@@ -31,7 +33,7 @@ export default function Dashboard() {
     setLoadingCreate(true);
     setCopySuccess("");
     try {
-      const res = await fetch("http://localhost:3001/api/dashboard/room", {
+      const res = await fetch(`${backendURL}/api/dashboard/room`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,7 +61,7 @@ export default function Dashboard() {
   async function joinRoom() {
     setLoadingJoin(true);
     try {
-      const res = await fetch(`http://localhost:3001/api/dashboard/join-room`, {
+      const res = await fetch(`${backendURL}/api/dashboard/join-room`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -82,7 +84,7 @@ export default function Dashboard() {
 
   async function showRooms() {
     setLoadingShow(true);
-    const res = await fetch(`http://localhost:3001/api/dashboard/rooms`, {
+    const res = await fetch(`${backendURL}/api/dashboard/rooms`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -102,7 +104,7 @@ export default function Dashboard() {
   async function joinRoomviaId(roomId:number){
     setLoadingJoin(true);
     try {
-      const res = await fetch(`http://localhost:3001/api/dashboard/room/${roomId}`, {
+      const res = await fetch(`${backendURL}/api/dashboard/room/${roomId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
