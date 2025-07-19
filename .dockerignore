@@ -1,3 +1,15 @@
 node_modules
-.turbo
+**/node_modules
+pnpm-lock.yaml
+Dockerfile
+apps/**/dist
+*.log
+.git
+.gitignore
+.env
+.env.*
 .vscode
+.idea
+*.swp
+*.DS_Store
+.turbo

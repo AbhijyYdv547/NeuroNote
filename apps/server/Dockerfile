@@ -3,16 +3,16 @@ FROM node:22-alpine
 WORKDIR /app
 
 # Install dependencies
-COPY package.json ./
-COPY pnpm-lock.yaml ./
-COPY pnpm-workspace.yaml ./
+COPY . .
 
-COPY apps/server/package.json ./apps/server/package.json
+RUN npm install -g pnpm 
 
-RUN npm install -g pnpm && pnpm install
+RUN pnpm install
 
 # Copy backend app and shared code
-COPY . .
+RUN chmod +x apps/server/start.sh
+
+WORKDIR /app/apps/server
 
 EXPOSE 3001
 
