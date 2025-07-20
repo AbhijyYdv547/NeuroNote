@@ -3,7 +3,10 @@ FROM node:22-alpine
 WORKDIR /app
 
 # Install dependencies
-COPY . .
+COPY package.json ./package.json
+COPY packages ./packages
+COPY pnpm-workspace.yaml ./pnpm-workspace.yaml
+COPY apps/server ./apps/server
 
 RUN npm install -g pnpm 
 
