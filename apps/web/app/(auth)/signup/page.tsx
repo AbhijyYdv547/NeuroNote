@@ -19,7 +19,7 @@ export default function Signup() {
       const data = await signUpUser(form);
       if (data.userId) {
         toast.success("Signup successful! Redirecting...");
-        setTimeout(() => router.push("/signin"), 1500);
+        setTimeout(() => router.push("/login"), 1500);
       } else {
         toast.error(data.message || "Signup failed!");
       }
