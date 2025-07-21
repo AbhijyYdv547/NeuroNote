@@ -1,7 +1,7 @@
 import { JWT_SECRET } from "@repo/backend-common/config";
 import { CreateUserSchema, SigninSchema } from "@repo/common/types";
 import { prismaClient } from "@repo/db/client";
-import bcrypt from "bcrypt"
+import bcryptjs from "bcryptjs"
 import { Request,Response } from "express";
 import jwt from "jsonwebtoken"
 
@@ -15,7 +15,7 @@ export const signupController =  async (req:Request, res:Response) => {
   }
 
   try {
-    const hashedPassword = await bcrypt.hash(parsedData.data.password, 10);
+    const hashedPassword = await bcryptjs.hash(parsedData.data.password, 10);
     const user = await prismaClient.user.create({
       data: {
         email: parsedData.data?.email,
@@ -57,7 +57,7 @@ export const loginController = async (req:Request, res:Response) => {
       return;
     }
 
-    const passwordMatch = await bcrypt.compare(parsedData.data.password, user.password);
+    const passwordMatch = await bcryptjs.compare(parsedData.data.password, user.password);
     if (!passwordMatch) {
       res.status(403).json({ message: "Invalid email or password" });
       return;

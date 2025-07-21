@@ -1,8 +1,8 @@
 import { middleware } from "../middlewares/userMiddleware"
-import express from "express"
+import express, { Router } from "express"
 import { getChatsController, grammarCheckContent, summarizeContent } from "../controllers/roomController";
 
-const router = express.Router();
+const router:Router = express.Router();
 
 router.get("/chats/:roomId", getChatsController );
 

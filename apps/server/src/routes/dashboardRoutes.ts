@@ -1,8 +1,8 @@
-import express from "express";
+import express, { Router } from "express";
 import { middleware } from "../middlewares/userMiddleware";
 import { createRoomController, getAllRoomController, joinRoomByCodeController, joinRoomByIdController } from "../controllers/dashboardController";
 
-const router = express.Router();
+const router:Router = express.Router();
 
 router.post("/room", middleware,createRoomController )
 
