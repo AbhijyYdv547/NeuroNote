@@ -97,7 +97,16 @@
 
 ## ⚙️ Getting Started
 
+### Manual Setup
+
 ```bash
+📋 Prerequisites
+Node.js (v18+ recommended)
+pnpm (Install via npm i -g pnpm)
+PostgreSQL (Locally running, or use cloud-hosted)
+Git
+
+🔧 Steps
 # Clone the repository
 git clone https://github.com/your-username/neuronote
 cd neuronote
@@ -105,8 +114,63 @@ cd neuronote
 # Install dependencies
 pnpm install
 
-# Run development server
+# Create environment variables
+Change .env.example to .env file
+# Also, add your Gemini API key to /apps/server/.env
+# Change the Database url in /packages/db folder to a proper postgres db url
+
+# Generate prisma client
+cd packages/db
+npx prisma generate
+
+# Run development servers
 pnpm run dev
+
+# Access the App
+Frontend: http://localhost:3000
+Backend API: http://localhost:3001
+WebSocket: ws://localhost:5000
+Hocuspocus: ws://localhost:1234
+
+```
+
+### Docker setup 
+```
+🧾 1. Prerequisites
+Install Docker
+
+Install Docker Compose
+
+## Clone the repo:
+git clone https://github.com/your-username/neuronote
+cd neuronote
+
+🛠️ 2. Configure Environment Variables
+Rename .env.example to .env in all the directories.
+
+# Add your Gemini API Key to /apps/server/.env:
+GEMINI_API_KEY=your_gemini_api_key
+
+📦 3. Run All Services
+# Use the following command to build and start everything:
+
+docker-compose up --build
+This will start:
+
+web: Next.js frontend
+server: REST backend (auth, notes, AI)
+ws-server: WebSocket chat backend
+hocuspocus-server: Real-time Tiptap collaboration server
+postgres: PostgreSQL database
+
+✅ 4. Access the App
+# Once Docker Compose finishes:
+
+Frontend: http://localhost:3000
+Backend API: http://localhost:3001
+WebSocket: ws://localhost:5000
+Hocuspocus: ws://localhost:1234
+
 ```
 
 > Ensure PostgreSQL is running and `.env` is properly configured with your database and API keys.
@@ -146,7 +210,7 @@ packages/
 ## ✅ TODOs
 
 * [X] Add AI assistant with summarization and grammar-check
-* [ ] Dockerize the app
+* [X] Dockerize the app
 * [ ] Deploy full-stack app
 * [ ] Add note version history
 
