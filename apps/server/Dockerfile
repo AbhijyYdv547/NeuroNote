@@ -1,23 +1,58 @@
-FROM node:22-alpine
+FROM node:22-alpine AS base
+
+ENV PNPM_HOME="/pnpm"
+ENV PATH="${PNPM_HOME}:${PATH}"
+
+RUN npm install -g pnpm
+
+FROM base AS builder
+
+RUN apk update && apk add --no-cache libc6-compat
 
 WORKDIR /app
 
-# Install dependencies
-COPY package.json ./package.json
-COPY packages ./packages
-COPY pnpm-workspace.yaml ./pnpm-workspace.yaml
+RUN pnpm add -g turbo@latest
+
+COPY pnpm-lock.yaml ./
+COPY pnpm-workspace.yaml ./
+COPY package.json ./
+COPY turbo.json ./
 COPY apps/server ./apps/server
+COPY packages ./packages
 
-RUN npm install -g pnpm 
+RUN turbo prune server --docker
 
-RUN pnpm install
+COPY . .
 
-# Copy backend app and shared code
-RUN chmod +x apps/server/start.sh
+FROM base AS installer
 
-WORKDIR /app/apps/server
+RUN apk update
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
 
-EXPOSE 3001
+COPY --from=builder /app/out/json/ ./
+COPY --from=builder /app/out/full/ ./
 
-# Run migrations and start server
-CMD ["sh", "./start.sh"]
+RUN pnpm install --frozen-lockfile
+
+RUN pnpm turbo run build --filter=server
+
+RUN pnpm --filter=packages/db exec prisma generate
+
+FROM base AS runner
+
+WORKDIR /app
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 backenduser
+USER backenduser
+
+COPY --from=installer --chown=backenduser:nodejs /app/apps/server/dist ./apps/server/dist
+COPY --from=installer --chown=backenduser:nodejs /app/apps/server/node_modules ./apps/server/node_modules
+COPY --from=installer --chown=backenduser:nodejs /app/packages/db/prisma ./packages/db/prisma
+COPY --from=installer --chown=backenduser:nodejs /app/packages/db/node_modules ./packages/db/node_modules
+COPY --from=installer --chown=backenduser:nodejs /app/node_modules ./node_modules
+COPY --from=installer --chown=backenduser:nodejs /app/packages ./packages
+
+CMD ["node", "apps/server/dist/index.js"]
+

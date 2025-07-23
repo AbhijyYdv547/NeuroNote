@@ -6,7 +6,8 @@
     "./client": "./src/index.ts"
   },
 "scripts": {
-  "generate": "prisma generate"
+  "generate": "prisma generate",
+  "postinstall": "prisma generate"
 },
 
   "devDependencies": {

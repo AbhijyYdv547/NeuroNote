@@ -1,68 +1,77 @@
-version: "3.8"
-
 services:
   postgres:
     image: postgres:14
     container_name: postgres
     restart: always
-    ports:
-      - "5432:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: neuronote
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app_network
 
   http-backend:
+    container_name: http-backend
     build:
       context: .
       dockerfile: apps/server/Dockerfile
-    container_name: http-backend
-    depends_on:
-      - postgres
+    restart: always
     ports:
       - "3001:3001"
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/neuronote
-    volumes:
-      - .:/app
+    depends_on:
+      - postgres
+    networks:
+      - app_network
 
   ws-server:
+    container_name: ws-backend
     build:
       context: .
       dockerfile: apps/ws-server/Dockerfile
-    container_name: ws-backend
+    restart: always
     ports:
       - "8080:8080"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/neuronote  
     depends_on:
       - http-backend
-    volumes:
-      - .:/app
+    networks:
+      - app_network
 
   hocuspocus:
+    container_name: hocpoc-backend
     build:
       context: .
       dockerfile: apps/hocuspocus-server/Dockerfile
-    container_name: hocpoc-backend
+    restart: always
     ports:
       - "1234:1234"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/neuronote  
     depends_on:
       - http-backend
-    volumes:
-      - .:/app
+    networks:
+      - app_network
 
   frontend:
+    container_name: frontend
     build:
       context: .
       dockerfile: apps/web/Dockerfile
-    container_name: frontend
+    restart: always
     ports:
       - "3000:3000"
     depends_on:
       - http-backend
-    volumes:
-      - .:/app
+    networks:
+      - app_network
 
 volumes:
   postgres_data:
+
+networks:
+  app_network:

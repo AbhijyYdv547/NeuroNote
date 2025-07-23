@@ -19,7 +19,7 @@ export default function Signup() {
       const data = await signUpUser(form);
       if (data.userId) {
         toast.success("Signup successful! Redirecting...");
-        setTimeout(() => router.push("/signin"), 1500);
+        setTimeout(() => router.push("/login"), 1500);
       } else {
         toast.error(data.message || "Signup failed!");
       }
@@ -36,7 +36,7 @@ export default function Signup() {
       footer={
         <p className="mt-4 text-center text-sm text-gray-400">
           Already have an account?{" "}
-          <a href="/signin" className="text-blue-500 hover:underline">
+          <a href="/login" className="text-blue-500 hover:underline">
             Log in
           </a>
         </p>
