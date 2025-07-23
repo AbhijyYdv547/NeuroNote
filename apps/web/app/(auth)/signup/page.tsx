@@ -36,7 +36,7 @@ export default function Signup() {
       footer={
         <p className="mt-4 text-center text-sm text-gray-400">
           Already have an account?{" "}
-          <a href="/signin" className="text-blue-500 hover:underline">
+          <a href="/login" className="text-blue-500 hover:underline">
             Log in
           </a>
         </p>
