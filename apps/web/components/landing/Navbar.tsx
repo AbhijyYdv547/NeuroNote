@@ -1,102 +1,95 @@
 "use client";
-
-import { Menu, X } from "lucide-react";
+import {
+    Navbar,
+    NavBody,
+    NavItems,
+    MobileNav,
+    NavbarLogo,
+    NavbarButton,
+    MobileNavHeader,
+    MobileNavToggle,
+    MobileNavMenu,
+} from "@/components/ui/resizable-navbar";
 import { useState } from "react";
-import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { navItems } from "../../constants/index";
 
+export function ResizableNav() {
+    const navItems = [
+        {
+            name: "Features",
+            link: "#features",
+        },
+        {
+            name: "Pricing",
+            link: "#pricing",
+        },
+        {
+            name: "Contact",
+            link: "#contact",
+        },
+    ];
 
-const Navbar = () => {
-    const [mobileOpen, setMobileOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 backdrop-blur-lg bg-white/5 supports-[backdrop-filter]:bg-white/5">
-            <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-                {/* Logo */}
-                <Link href="/">
-                    <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full shadow-lg" />
-                        <span className="text-xl font-semibold text-white drop-shadow-sm">
-                            NeuroNote
-                        </span>
+        <div className="relative w-full">
+            <Navbar>
+                {/* Desktop Navigation */}
+                <NavBody>
+                    <NavbarLogo />
+                    <NavItems items={navItems} />
+                    <div className="flex items-center gap-4">
+                        <NavbarButton variant="secondary">Login</NavbarButton>
+                        <NavbarButton variant="primary">Signup</NavbarButton>
                     </div>
-                </Link>
+                </NavBody>
 
-                {/* Desktop Nav */}
-                <ul className="hidden lg:flex items-center gap-10 text-sm text-white/80">
-                    {navItems.map((item) => (
-                        <li key={item.label}>
-                            <Link href={item.href} className="hover:text-white transition-colors duration-200 drop-shadow-sm">
-                                {item.label}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
+                {/* Mobile Navigation */}
+                <MobileNav>
+                    <MobileNavHeader>
+                        <NavbarLogo />
+                        <MobileNavToggle
+                            isOpen={isMobileMenuOpen}
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        />
+                    </MobileNavHeader>
 
-                {/* Desktop CTAs */}
-                <div className="hidden lg:flex items-center gap-4">
-                    <Link href="/login">
-                        <button className="px-4 py-2 border border-white/20 rounded-lg text-sm text-white/90 hover:bg-white/10 backdrop-blur-sm transition-all duration-200">
-                            Sign In
-                        </button>
-                    </Link>
-                    <Link href="/signup">
-                        <button className="px-4 py-2 text-sm bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg">
-                            Get Started
-                        </button>
-                    </Link>
-                </div>
-
-                {/* Mobile Toggle */}
-                <button
-                    className="lg:hidden text-white/90 hover:text-white transition-colors duration-200"
-                    onClick={() => setMobileOpen((prev) => !prev)}
-                >
-                    {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
-            </div>
-
-            {/* Mobile Drawer */}
-            <AnimatePresence>
-                {mobileOpen && (
-                    <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="lg:hidden bg-black/20 backdrop-blur-md border-t border-white/10 px-6 py-4 space-y-6"
+                    <MobileNavMenu
+                        isOpen={isMobileMenuOpen}
+                        onClose={() => setIsMobileMenuOpen(false)}
                     >
-                        <ul className="flex flex-col gap-4 text-white/80 text-sm">
-                            {navItems.map((item) => (
-                                <li key={item.label}>
-                                    <Link
-                                        href={item.href}
-                                        onClick={() => setMobileOpen(false)}
-                                        className="hover:text-white transition-colors duration-200 drop-shadow-sm"
-                                    >
-                                        {item.label}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                        <div className="flex flex-col gap-3">
-                            <Link href="/login">
-                                <button className="w-full border border-white/20 py-2 rounded-lg text-sm text-white/90 hover:bg-white/10 backdrop-blur-sm transition-all duration-200">
-                                    Sign In
-                                </button>
-                            </Link>
-                            <Link href="/signup">
-                                <button className="w-full py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:from-blue-600 hover:to-purple-700 text-sm transition-all duration-200 shadow-lg">
-                                    Get Started
-                                </button>
-                            </Link>
+                        {navItems.map((item, idx) => (
+                            <a
+                                key={`mobile-link-${idx}`}
+                                href={item.link}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="relative text-neutral-600 dark:text-neutral-300"
+                            >
+                                <span className="block">{item.name}</span>
+                            </a>
+                        ))}
+                        <div className="flex w-full flex-col gap-4">
+                            <NavbarButton
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                variant="primary"
+                                className="w-full"
+                            >
+                                Login
+                            </NavbarButton>
+                            <NavbarButton
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                variant="primary"
+                                className="w-full"
+                            >
+                                Book a call
+                            </NavbarButton>
                         </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </nav>
-    );
-};
+                    </MobileNavMenu>
+                </MobileNav>
+            </Navbar>
 
-export default Navbar;
+            {/* Navbar */}
+        </div>
+    );
+}
+
+export default ResizableNav;
