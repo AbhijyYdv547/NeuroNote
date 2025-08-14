@@ -49,14 +49,14 @@
 ## 📸 Screenshots
 
 <details>
-<summary>✨ Landing Page</summary>
+<summary>Landing Page</summary>
 <p align="center">
   <img src="https://github.com/user-attachments/assets/421bb724-3da5-44ab-a34c-9657ab590c85" width="600"/>
 </p>
 </details>
 
 <details>
-<summary>🔐 Login and Signup Pages</summary>
+<summary>Login and Signup Pages</summary>
 <p align="center">
   <img src="https://github.com/user-attachments/assets/e1f734b4-471e-4a19-84a5-c841fb9a7f3c" width="300"/>
   <img src="https://github.com/user-attachments/assets/167305d2-b97a-4bdd-8339-339d175d1785" width="300"/>
@@ -64,28 +64,28 @@
 </details>
 
 <details>
-<summary>📊 Dashboard</summary>
+<summary>Dashboard</summary>
 <p align="center">
   <img src="https://github.com/user-attachments/assets/8c9b61dc-89ba-4413-b7ab-43d4054b26f4" width="600"/>
 </p>
 </details>
 
 <details>
-<summary>📝 Collaborative Editor</summary>
+<summary>Collaborative Editor</summary>
 <p align="center">
   <img src="https://github.com/user-attachments/assets/ded6da2d-caa4-40e7-b0cf-36d7c8fe6223" width="600"/>
 </p>
 </details>
 
 <details>
-<summary>💬 Room Chat</summary>
+<summary>Room Chat</summary>
 <p align="center">
   <img src="https://github.com/user-attachments/assets/e7432b14-85de-4dcf-be77-604e4fddc16f" width="600"/>
 </p>
 </details>
 
 <details>
-<summary>🤖 AI Summarization & Grammar-check</summary>
+<summary>AI Summarization & Grammar-check</summary>
 <p align="center">
   <img src="https://github.com/user-attachments/assets/467e3fdf-2700-4006-a110-94a91b394684" width="600"/>
 </p>
@@ -138,8 +138,6 @@ Hocuspocus: ws://localhost:1234
 ```
 🧾 1. Prerequisites
 Install Docker
-
-Install Docker Compose
 
 ## Clone the repo:
 git clone https://github.com/your-username/neuronote
@@ -221,7 +219,7 @@ packages/
 Interested in contributing or sharing feedback? Feel free to connect:
 
 * 📫 Email: yadavabhjay@gmail.com
-* 🌐 [Portfolio](#)
+* 🌐 [Portfolio](https://portfolio1-two-xi.vercel.app/)
 * 💼 [LinkedIn](https://linkedin.com/in/abj-ydv)
 
 ---
