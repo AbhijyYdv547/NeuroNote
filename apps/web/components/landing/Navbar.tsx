@@ -38,8 +38,8 @@ export function ResizableNav() {
                     <NavbarLogo />
                     <NavItems items={navItems} />
                     <div className="flex items-center gap-4">
-                        <NavbarButton variant="secondary">Login</NavbarButton>
-                        <NavbarButton variant="primary">Signup</NavbarButton>
+                        <NavbarButton variant="dark" href="/login">Login</NavbarButton>
+                        <NavbarButton variant="gradient" href="/signup">Signup</NavbarButton>
                     </div>
                 </NavBody>
 

@@ -1,4 +1,4 @@
-import Link from "next/link"; // Correct import for Next.js
+import Link from "next/link"; 
 
 const HeroSection = () => {
     return (
