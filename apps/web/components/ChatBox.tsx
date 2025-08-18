@@ -10,12 +10,17 @@ interface ChatMessage {
   timestamp: string;
 }
 
+interface ChatUser{
+  id:string,
+  name:string
+}
+
 export default function ChatBox({ roomId }: { roomId: string }) {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [typingUsers, setTypingUsers] = useState<string[]>([]);
   const [input, setInput] = useState("");
-  const [currentUser, setCurrentUser] = useState<string | null>(null);
+  const [currentUser, setCurrentUser] = useState<ChatUser | null>(null);
   const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
@@ -23,7 +28,10 @@ export default function ChatBox({ roomId }: { roomId: string }) {
     async function fetchUser() {
       try {
         const res = await axios.get("api/auth/me");
-        setCurrentUser(res.data.user.id);
+        setCurrentUser({
+          id: res.data.user.id.toString(),
+          name: res.data.user.name
+        });
       } catch (err) {
         console.error("Error fetching user:", err);
       }
@@ -137,12 +145,12 @@ export default function ChatBox({ roomId }: { roomId: string }) {
             <span
               key={index}
               className={`px-2 py-1 rounded-full text-xs font-medium shadow-sm transition-colors
-                ${userId === currentUser
+                ${userId === currentUser?.id
                   ? "bg-blue-600 text-white"
                   : "bg-zinc-800 text-gray-200"
                 }`}
             >
-              {userId === currentUser ? "You" : userId}
+              {userId === currentUser?.id ? "You" : userId}
             </span>
           ))}
         </div>
@@ -168,7 +176,7 @@ export default function ChatBox({ roomId }: { roomId: string }) {
         `}</style>
         <div className="space-y-3 custom-scrollbar">
           {messages.map((msg, index) => {
-            const isSelf = msg.sender.toString() === currentUser;
+            const isSelf = msg.sender.toString() === currentUser?.id;
 
             return (
               <div
