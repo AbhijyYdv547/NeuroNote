@@ -26,16 +26,16 @@ export default function AuthPage({
   const router = useRouter();
   return (
     <div className="min-h-screen min-w-screen bg-[#262626] flex justify-center items-center">
-      <div className="shadow-input mx-auto w-full max-w-md rounded-none dark:bg-white p-4 md:rounded-2xl md:p-8 bg-black">
+      <div className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
         <div className="flex items-center">
           <div>
             <Button variant={"default"} className="bg-zinc-700" onClick={() => router.push('/')}><IconArrowLeft /></Button>
           </div>
           <div className="flex-1 text-center">
-            <h2 className="text-xl font-bold dark:text-neutral-800 text-neutral-200 text-center">
+            <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200 text-center">
               {login ? "Welcome back 😎 " : "Welcome to Resume Builder😊"}
             </h2>
-            <p className="mt-2 max-w-sm mx-auto text-sm dark:text-neutral-800 text-neutral-200 text-center">
+            <p className="mt-2 max-w-sm mx-auto text-sm text-neutral-800 dark:text-neutral-200 text-center">
               {login
                 ? "Login to Resume Builder"
                 : "Start your journey by Registering"}
@@ -87,14 +87,14 @@ export default function AuthPage({
           </button>
 
         </form>
-        <div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent dark:via-neutral-300 to-transparent via-neutral-700" />
+        <div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
 
         <div className="flex justify-evenly items-center my-8">
-          <button className="group/btn shadow-input relative flex h-10 items-center justify-start space-x-2 rounded-md dark:bg-gray-50 px-4 font-medium text-black bg-zinc-900 shadow-[0px_0px_1px_1px_#262626]"
+          <button className="group/btn shadow-input relative flex h-10 items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 shadow-[0px_0px_1px_1px_#262626]"
             
           >
-            <IconBrandGoogle className="h-4 w-4 dark:text-neutral-800 text-neutral-300" />
-            <span className="text-sm dark:text-neutral-700 text-neutral-300">
+            <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
+            <span className="text-sm text-neutral-700 dark:text-neutral-300">
               Google
             </span>
             <BottomGradient />
@@ -105,7 +105,7 @@ export default function AuthPage({
           <div className="text-center text-sm text-gray-50">
             Don&apos;t have an account?{" "}
             <a
-              onClick={() => router.push("/register")}
+              onClick={() => router.push("/signup")}
               className="underline underline-offset-4 cursor-pointer"
             >
               Sign up
