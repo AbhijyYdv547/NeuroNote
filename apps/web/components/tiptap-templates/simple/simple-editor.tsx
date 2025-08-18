@@ -81,7 +81,6 @@ import * as Y from "yjs";
 import { HocuspocusProvider } from '@hocuspocus/provider';
 import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
-import { getToken } from "../../../hooks/useAuthToken"; // adjust path
 import { useDocContentStore } from "@/store/DocContentStore"
 import { hocuspocusURL } from "@/config/url"
 
@@ -201,19 +200,13 @@ const MobileToolbarContent = ({
 
 export function SimpleEditor({ docId,userId }: SimpleEditorProps) {
   const setDocContent = useDocContentStore((state) => state.setDocContent)
-  
-  const token = getToken();
-  if (!token) {
-    return <div>Authentication required</div>;
-  }
-  
+    
     const ydoc = new Y.Doc();
   
     const provider = new HocuspocusProvider({
       url: `${hocuspocusURL}`,
       name: docId,
       document: ydoc,
-      token
     });
   
   const isMobile = useMobile()

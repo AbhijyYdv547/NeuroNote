@@ -11,7 +11,7 @@ export const createRoomController = async (req:Request, res:Response) => {
     })
     return;
   }
-  //@ts-ignore
+
   const userId = req.userId;
   if (typeof userId !== "number") {
     res.status(401).json({ message: "Unauthorized" });

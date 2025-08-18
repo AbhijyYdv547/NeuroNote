@@ -98,3 +98,34 @@ export const logoutController = async (req:Request, res:Response) => {
 
   res.json({ message: "Logged out" });
 }
+
+export const myInfoController = async(req:Request, res:Response) => {
+    try {
+          const userId = req.userId;
+  if (typeof userId !== "number") {
+    res.status(401).json({ message: "Unauthorized" });
+    return;
+  }
+
+  const result = await prismaClient.user.findUnique({
+    where:{
+      id: userId
+    }
+  })
+
+  if (!result) {
+  res.status(404).json({ message: "User not found" });
+  return;
+}
+
+  res.json({
+      user:{
+          id: result.id,
+          name: result?.name
+      }
+  })
+  } catch (e) {
+console.error("myInfoController error:", e);
+    res.status(500).json({ message: "Internal server error" });
+  }
+}

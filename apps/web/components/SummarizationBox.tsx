@@ -1,14 +1,13 @@
 "use client";
 
 import { backendURL } from '@/config/url';
-import { getToken } from '@/hooks/useAuthToken';
 import { useDocContentStore } from '@/store/DocContentStore';
+import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
 
 
 const SummarizationBox = ({ roomId }: { roomId: string }) => {
     const docContent = useDocContentStore((state) => state.docContent)
-    const token = getToken();
 
       const [summary, setSummary] = useState<string>();
       const [grammar,setGrammar] = useState<string>();
@@ -19,16 +18,11 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
           console.log("Sending content to summarize:", docContent);
           setLoading(true);
           try {
-              const res = await fetch(`${backendURL}/api/room/summarize`, {
-                  method: "POST",
-                  headers: {
-                      "Content-Type": "application/json",
-                      Authorization: `${token}`,
-                  },
-                  body: JSON.stringify({ content: docContent }),
-              });
-              const data = await res.json();
-              setSummary(data.summary)
+              const res = await axios.post(`${backendURL}/api/room/summarize`, 
+                  { content: docContent }
+              );
+              const data = res.data.summary;
+              setSummary(data)
           } catch (err) {
               alert("Error joining room");
           } finally {
@@ -40,16 +34,11 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
           console.log("Sending content to summarize:", docContent);
           setLoading(true);
           try {
-              const res = await fetch(`${backendURL}/api/room/check-grammar`, {
-                  method: "POST",
-                  headers: {
-                      "Content-Type": "application/json",
-                      Authorization: `${token}`,
-                  },
-                  body: JSON.stringify({ content: docContent }),
-              });
-              const data = await res.json();
-              setSummary(data.grammar)
+              const res = await axios.post(`${backendURL}/api/room/check-grammar`, 
+                  { content: docContent }
+              );
+              const data = res.data.grammar
+              setGrammar(data)
           } catch (err) {
               alert("Error joining room");
           } finally {

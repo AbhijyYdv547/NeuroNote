@@ -1,13 +1,9 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { getToken } from "../hooks/useAuthToken";
-import { jwtDecode } from "jwt-decode";
 import { backendURL, wsURL } from "@/config/url";
+import axios from "axios";
 
-interface TokenPayload {
-  userId: string;
-}
 interface ChatMessage {
   sender: string;
   message: string;
@@ -23,31 +19,24 @@ export default function ChatBox({ roomId }: { roomId: string }) {
   const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
-  // Step 1: Decode token and set current user
   useEffect(() => {
-    const token = getToken();
-    if (!token) return;
-
-    try {
-      const decoded = jwtDecode<TokenPayload>(token);
-      if (decoded?.userId) {
-        setCurrentUser(decoded.userId.toString());
-      } else {
-        console.warn("Token missing 'userId'");
+    async function fetchUser() {
+      try {
+        const res = await axios.get(`${backendURL}/api/auth/me`);
+        setCurrentUser(res.data.user.id);
+      } catch (err) {
+        console.error("Error fetching user:", err);
       }
-    } catch (err) {
-      console.error("Error decoding token:", err);
     }
+
+    fetchUser();
   }, []);
 
-  // Step 2: After currentUser is set, setup WebSocket and fetch messages
+
   useEffect(() => {
     if (!currentUser) return;
 
-    const token = getToken();
-    if (!token) return;
-
-    const ws = new WebSocket(`${wsURL}?token=${token}`);
+    const ws = new WebSocket(`${wsURL}?roomId=${roomId}`);
 
     ws.onopen = () => {
       ws.send(JSON.stringify({ type: "join_room", roomId }));

@@ -1,34 +1,20 @@
-import { jwtDecode } from "jwt-decode";
 import { useState, useEffect } from "react";
-import { getToken } from "./useAuthToken";
+import axios from "axios";
+import { backendURL } from "@/config/url";
 
 export const useUserData = () => {
   const [currentUser, setCurrentUser] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  interface TokenPayload {
-    userId: string;
-  }
 
   useEffect(() => {
-    const token = getToken();
-    if (!token) {
-      setLoading(false);
-      return;
+    async function getUser(){
+      setLoading(true);
+      const result = await axios.get(`${backendURL}/api/auth/me`);
+      setCurrentUser(result.data.user.name)
+      setLoading(false)
     }
-
-    try {
-      const decoded = jwtDecode<TokenPayload>(token);
-      if (decoded?.userId) {
-        setCurrentUser(decoded.userId.toString());
-      } else {
-        console.warn("Token missing 'userId'");
-      }
-    } catch (err) {
-      console.error("Error decoding token:", err);
-    } finally {
-      setLoading(false);
-    }
+    getUser();
   }, []);
 
   return { currentUser, loading };

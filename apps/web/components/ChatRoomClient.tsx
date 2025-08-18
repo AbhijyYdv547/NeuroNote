@@ -1,20 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { getToken } from "@/hooks/useAuthToken";
 import ChatBox from "./ChatBox";
 
 export default function ChatRoomClient({ roomId }: { roomId: string }) {
   const socketRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    const token = getToken();
-    if (!token) {
-      console.error("Token not found.");
-      return;
-    }
 
-    const socket = new WebSocket(`ws://localhost:8080?token=${token}`);
+    const socket = new WebSocket(`ws://localhost:8080?roomId=${roomId}`);
     socketRef.current = socket;
 
     socket.onopen = () => {

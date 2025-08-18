@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getToken, clearToken } from "../../hooks/useAuthToken";
+import { clearToken } from "../../hooks/useAuthToken";
 import { useRouter } from "next/navigation";
-import { backendURL } from "@/config/url";
+import axios from "@/lib/axios"
 
 
 export default function Dashboard() {
@@ -23,7 +23,6 @@ export default function Dashboard() {
   const [secretCode, setSecretCode] = useState(""); 
   const [copySuccess, setCopySuccess] = useState("");
   const router = useRouter();
-  const token = getToken();
 
   useEffect(() => {
     showRooms();
@@ -33,23 +32,16 @@ export default function Dashboard() {
     setLoadingCreate(true);
     setCopySuccess("");
     try {
-      const res = await fetch(`${backendURL}/api/dashboard/room`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${token}`,
-        },
-        body: JSON.stringify({ name: roomName }),
+      const res = await axios.post("/api/dashboard/room", {
+        name: roomName,
       });
 
-      const data = await res.json();
-      setLoadingCreate(false);
-      if (res.ok) {
-        setSecretCode(data.secretCode);
+      if (res.data.secretCode) {
+        setSecretCode(res.data.secretCode);
         alert("Room created!");
         showRooms();
       } else {
-        alert(data.message);
+        alert(res.data.message);
       }
     } catch (err) {
       alert("Error creating room");
@@ -61,16 +53,13 @@ export default function Dashboard() {
   async function joinRoom() {
     setLoadingJoin(true);
     try {
-      const res = await fetch(`${backendURL}/api/dashboard/join-room`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${token}`,
-        },
-        body: JSON.stringify({ secretCode: secretCodeInput }),
+      const res = await axios.post("/api/dashboard/join-room", {
+        secretCode: secretCodeInput,
       });
-      const data = await res.json();
-      if (res.ok && data.room) {
+
+      const data = res.data;
+
+      if (data.room) {
         router.push(`/room/${data.room.id}`);
       } else {
         alert(data.message || "Room not found or invalid code");
@@ -84,19 +73,12 @@ export default function Dashboard() {
 
   async function showRooms() {
     setLoadingShow(true);
-    const res = await fetch(`${backendURL}/api/dashboard/rooms`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `${token}`,
-      }
-    })
-    const data = await res.json();
-    if (res.ok) {
-      setRooms(data.rooms);
-      setLoadingShow(false);
-    } else {
-      alert(data.message);
+    try {
+      const res = await axios.get("/api/dashboard/rooms");
+      setRooms(res.data.rooms);
+    } catch (err: any) {
+      alert(err.response?.data?.message || "Error loading rooms");
+    } finally {
       setLoadingShow(false);
     }
   }
@@ -104,21 +86,16 @@ export default function Dashboard() {
   async function joinRoomviaId(roomId:number){
     setLoadingJoin(true);
     try {
-      const res = await fetch(`${backendURL}/api/dashboard/room/${roomId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `${token}`,
-        }
-      });
-      const data = await res.json();
-      if (res.ok && data.room) {
+      const res = await axios.get(`/api/dashboard/room/${roomId}`);
+      const data = res.data;
+
+      if (data.room) {
         router.push(`/room/${data.room.id}`);
       } else {
         alert(data.message || "Room not found or invalid code");
       }
-    } catch (err) {
-      alert("Error joining room");
+    } catch (err: any) {
+      alert(err.response?.data?.message || "Error joining room");
     } finally {
       setLoadingJoin(false);
     }
