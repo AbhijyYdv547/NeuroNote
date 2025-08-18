@@ -15,6 +15,7 @@ export const signupController =  async (req:Request, res:Response) => {
   }
 
   try {
+    console.log("Body:", req.body);
     const hashedPassword = await bcryptjs.hash(parsedData.data.password, 10);
     const user = await prismaClient.user.create({
       data: {
@@ -23,10 +24,14 @@ export const signupController =  async (req:Request, res:Response) => {
         name: parsedData.data.name
       }
     })
+    console.log(user);
     res.json({
-      userId: user.id
-    })
+  message: "Register Successful",
+  userId: user.id
+});
+
   } catch (e) {
+    console.log(e);
     res.status(411).json({
       message: "User already exists with this username"
     })
@@ -64,15 +69,32 @@ export const loginController = async (req:Request, res:Response) => {
     }
 
     const token = jwt.sign({
-      userId: user?.id
-    }, JWT_SECRET)
+      userId: user.id
+    }, JWT_SECRET,{expiresIn:"1h"})
+
+    res.cookie("token",token,{
+      httpOnly:true,
+      secure:process.env.NODE_ENV === "production",
+      sameSite:"lax",
+      maxAge: 60*60*1000
+    })
 
     res.json({
-      token
+      message: "Login Successful"
     })
   } catch (e) {
 
     res.status(500).json({ message: "Internal server error" });
   }
 
+}
+
+export const logoutController = async (req:Request, res:Response) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+  });
+
+  res.json({ message: "Logged out" });
 }

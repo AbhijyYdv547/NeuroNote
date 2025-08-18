@@ -1,64 +1,48 @@
 "use client";
-import { useState } from "react";
+import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import AuthPage from "@/components/AuthPage";
 import { useRedirectIfLoggedIn } from "@/hooks/useRedirectIfLoggedIn";
-import { setToken } from "@/hooks/useAuthToken";
-import toast from "react-hot-toast";
-import { logInUser } from "@/lib/api";
+import axios from "axios"
 
 export default function Login() {
-  const [form, setForm] = useState({ email: "", password: "" });
-  const [loading, setLoading] = useState(false);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null)
   const router = useRouter();
 
   useRedirectIfLoggedIn();
 
-  async function handleLogin() {
-    setLoading(true);
+  async function handleLogin(e:React.FormEvent) {
+    e.preventDefault();
+
+    const email = emailRef.current?.value;
+    const password = passwordRef.current?.value;
+
     try {
-      const data = await logInUser(form);
-      if (data.token) {
-        setToken(data.token);
-        toast.success("Logged in successfully!");
-        setTimeout(() => router.push("/dashboard"), 1500);
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`,
+        { email, password },
+        {
+          withCredentials: true,
+        }
+      );
+      if (res.data.message === "Login Successful") {
+        router.push("/dashboard");
       } else {
-        toast.error(data.message || "Login failed!");
+        console.error("Login failed", res.data);
       }
-    } catch {
-      toast.error("Something went wrong. Try again!");
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      console.error("Login error", err);
     }
   }
+  
 
   return (
     <AuthPage
-      title="Welcome Back"
-      footer={
-        <p className="mt-4 text-center text-sm text-gray-400">
-          Don't have an account?{" "}
-          <a href="/signup" className="text-blue-500 hover:underline">
-            Sign up
-          </a>
-        </p>
-      }
-    >
-      <input
-        type="text"
-        placeholder="Email"
-        className="input"
-        onChange={(e) => setForm({ ...form, email: e.target.value })}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        className="input"
-        onChange={(e) => setForm({ ...form, password: e.target.value })}
-      />
-      <button className="btn" onClick={handleLogin} disabled={loading}>
-        {loading ? "Logging in..." : "Log In"}
-      </button>
-    </AuthPage>
+      emailRef={emailRef}
+      passwordRef={passwordRef}
+      onSubmit={handleLogin}
+      login={true}
+    />
   );
 }

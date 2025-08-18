@@ -1,68 +1,62 @@
 "use client";
-import { useState } from "react";
+import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import AuthPage from "@/components/AuthPage";
 import { useRedirectIfLoggedIn } from "@/hooks/useRedirectIfLoggedIn";
-import toast from "react-hot-toast";
-import { signUpUser } from "@/lib/api";
+import axios from "axios";
+import { backendURL } from "@/config/url";
 
 export default function Signup() {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
-  const [loading, setLoading] = useState(false);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   useRedirectIfLoggedIn();
 
-  async function handleSignup() {
-    setLoading(true);
-    try {
-      const data = await signUpUser(form);
-      if (data.userId) {
-        toast.success("Signup successful! Redirecting...");
-        setTimeout(() => router.push("/login"), 1500);
-      } else {
-        toast.error(data.message || "Signup failed!");
-      }
-    } catch {
-      toast.error("Something went wrong. Try again!");
-    } finally {
-      setLoading(false);
+  async function register(e: React.FormEvent) {
+    e.preventDefault();
+
+    const name = nameRef.current?.value.trim();
+    const email = emailRef.current?.value.trim();
+    const password = passwordRef.current?.value;
+
+    if (!name || !email || !password) {
+      console.error("Please fill in all fields");
+      return;
     }
-  }
+
+    try {
+      console.log("Entry");
+      const res = await axios.post(`${backendURL}/api/auth/signup`,{
+        email,
+        password,
+        name,
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        withCredentials: true, 
+      }
+    );
+      if (res.data.message === "Register Successful") {
+        router.push("/login");
+      } else {
+        console.error("Register failed", res.data);
+      }
+    } catch (err) {
+      console.error("Registration error", err);
+    }
+    }
+  
 
   return (
     <AuthPage
-      title="Create an Account"
-      footer={
-        <p className="mt-4 text-center text-sm text-gray-400">
-          Already have an account?{" "}
-          <a href="/login" className="text-blue-500 hover:underline">
-            Log in
-          </a>
-        </p>
-      }
-    >
-      <input
-        type="text"
-        placeholder="Name"
-        className="input"
-        onChange={(e) => setForm({ ...form, name: e.target.value })}
-      />
-      <input
-        type="text"
-        placeholder="Email"
-        className="input"
-        onChange={(e) => setForm({ ...form, email: e.target.value })}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        className="input"
-        onChange={(e) => setForm({ ...form, password: e.target.value })}
-      />
-      <button className="btn" onClick={handleSignup} disabled={loading}>
-        {loading ? "Signing up..." : "Sign Up"}
-      </button>
-    </AuthPage>
+      nameRef={nameRef}
+      emailRef={emailRef}
+      passwordRef={passwordRef}
+      onSubmit={register}
+      login={false}
+    />
   );
 }

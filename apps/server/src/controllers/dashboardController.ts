@@ -13,6 +13,10 @@ export const createRoomController = async (req:Request, res:Response) => {
   }
   //@ts-ignore
   const userId = req.userId;
+  if (typeof userId !== "number") {
+    res.status(401).json({ message: "Unauthorized" });
+    return;
+  }
   const code8Digits = generateAlphanumericCode();
   try {
     const room = await prismaClient.room.create({

@@ -3,11 +3,18 @@ import cors from "cors"
 import authRoutes from "./routes/authRoutes";
 import dashboardRoutes from "./routes/dashboardRoutes";
 import roomRoutes from "./routes/roomRoutes";
+import cookieParser from "cookie-parser";
+import dotenv from "dotenv"
+dotenv.config()
 
 
 const app = express();
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: process.env.NEXT_APP_URL,
+    credentials: true,
+  }))
+  app.use(cookieParser())
 
 
 app.use("/api/auth",authRoutes)
