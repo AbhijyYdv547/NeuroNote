@@ -21,6 +21,7 @@
     "@hocuspocus/extension-logger": "^2.15.2",
     "@hocuspocus/server": "^2.15.2",
     "@types/jsonwebtoken": "^9.0.9",
+    "cookie": "^1.0.2",
     "jsonwebtoken": "^9.0.2",
     "yjs": "^13.6.26"
   }

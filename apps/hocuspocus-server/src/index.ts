@@ -4,15 +4,26 @@ import * as Y from "yjs";
 import {prismaClient} from "@repo/db/client"
 import jwt,{JwtPayload} from "jsonwebtoken"
 import { JWT_SECRET } from "@repo/backend-common/config";
+import {parse} from "cookie"
 
 const server = Server.configure({
   port: 1234,
 
-  onAuthenticate: async ({ token, documentName }) => {
-    if (!token) throw new Error("Missing token");
-  
-    const payload = jwt.verify(token, JWT_SECRET) as JwtPayload;
+  onAuthenticate: async ({ token,request,documentName }) => {
+
+    const cookieHeader = request?.headers?.cookie || "";
+
+    const cookies = parse(cookieHeader);
+    const tokenFromCookie = cookies.token;
+
+    if (!tokenFromCookie) throw new Error("Missing auth token in cookies");
+
+
+    const payload : JwtPayload = jwt.verify(tokenFromCookie, JWT_SECRET) as JwtPayload;
+
+
     const userId = payload?.userId;
+    if (!userId) throw new Error("Invalid user");
   
     const membership = await prismaClient.roomMembership.findFirst({
       where: {

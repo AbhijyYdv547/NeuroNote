@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { backendURL } from "@/config/url";
+import axios from "@/lib/axios";
 
 export const useUserData = () => {
   const [currentUser, setCurrentUser] = useState<string | null>(null);
@@ -10,7 +9,7 @@ export const useUserData = () => {
   useEffect(() => {
     async function getUser(){
       setLoading(true);
-      const result = await axios.get(`${backendURL}/api/auth/me`);
+      const result = await axios.get("/api/auth/me");
       setCurrentUser(result.data.user.name)
       setLoading(false)
     }

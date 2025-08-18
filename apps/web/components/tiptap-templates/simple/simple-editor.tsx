@@ -207,6 +207,10 @@ export function SimpleEditor({ docId,userId }: SimpleEditorProps) {
       url: `${hocuspocusURL}`,
       name: docId,
       document: ydoc,
+      parameters: {
+        credentials: "include",
+      },
+      token:"dummy"
     });
   
   const isMobile = useMobile()

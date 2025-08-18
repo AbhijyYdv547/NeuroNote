@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { backendURL, wsURL } from "@/config/url";
-import axios from "axios";
+import axios from "@/lib/axios";
 
 interface ChatMessage {
   sender: string;
@@ -22,7 +22,7 @@ export default function ChatBox({ roomId }: { roomId: string }) {
   useEffect(() => {
     async function fetchUser() {
       try {
-        const res = await axios.get(`${backendURL}/api/auth/me`);
+        const res = await axios.get("api/auth/me");
         setCurrentUser(res.data.user.id);
       } catch (err) {
         console.error("Error fetching user:", err);
