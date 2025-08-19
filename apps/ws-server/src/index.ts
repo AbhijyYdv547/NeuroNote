@@ -125,9 +125,7 @@ wss.on("connection", function connection(ws, request) {
             })
 
             users.forEach(user => {
-                console.log(`Checking user ${user.userId} in rooms: ${user.rooms}`);
                 if (user.rooms.includes(roomId.toString())) {
-                    console.log(`Sending message to user ${user.userId}`);
                     user.ws.send(JSON.stringify({
                         type: "chat",
                         message: message,

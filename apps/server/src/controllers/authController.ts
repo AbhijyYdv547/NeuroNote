@@ -15,7 +15,6 @@ export const signupController =  async (req:Request, res:Response) => {
   }
 
   try {
-    console.log("Body:", req.body);
     const hashedPassword = await bcryptjs.hash(parsedData.data.password, 10);
     const user = await prismaClient.user.create({
       data: {
@@ -24,14 +23,12 @@ export const signupController =  async (req:Request, res:Response) => {
         name: parsedData.data.name
       }
     })
-    console.log(user);
     res.json({
   message: "Register Successful",
   userId: user.id
 });
 
   } catch (e) {
-    console.log(e);
     res.status(411).json({
       message: "User already exists with this username"
     })

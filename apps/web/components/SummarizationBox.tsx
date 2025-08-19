@@ -14,7 +14,6 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
       const [loading,setLoading] = useState(false);
 
       const summarizeDoc = async ()=>{
-          console.log("Sending content to summarize:", docContent);
           setLoading(true);
           try {
               const res = await axios.post("/api/room/summarize", 
@@ -31,7 +30,6 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
       }
 
       const checkGrammar = async ()=>{
-          console.log("Sending content to summarize:", docContent);
           setLoading(true);
           try {
               const res = await axios.post("/api/room/check-grammar", 
@@ -40,8 +38,8 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
               const data = res.data.grammar
               setGrammar(data)
           } catch (err) {
-            console.log(err)
-              alert("Error joining room");
+              console.error("Grammar generation error:", err);
+              alert("Failed to summarize the document.");
           } finally {
               setLoading(false);
           }

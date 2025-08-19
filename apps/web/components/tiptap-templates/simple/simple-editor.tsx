@@ -269,19 +269,16 @@ export function SimpleEditor({ docId,userId }: SimpleEditorProps) {
 
   React.useEffect(() => {
     if (!editor) return;
-
-    // set content whenever editor updates
     const update = () => {
       const text = editor.getText();
-      console.log("Editor content updated:", text); // 🔍 Debug log
       setDocContent(text);
     }
 
-    update(); // Initial run
+    update(); 
 
-    editor.on('update', update); // Listen for live changes
+    editor.on('update', update);
 
-    () => editor.off('update', update); // Clean up
+    () => editor.off('update', update); 
   }, [editor])
 
 

@@ -27,7 +27,6 @@ export default function Signup() {
     }
 
     try {
-      console.log("Entry");
       const res = await axios.post("/api/auth/signup",{
         email,
         password,

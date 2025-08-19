@@ -10,5 +10,5 @@ export async function clearToken() {
         withCredentials: true, 
       }
  );
- console.log(res,"Done");
+ 
 }

@@ -35,8 +35,6 @@ const server = Server.configure({
     if (!membership) {
       throw new Error("Access denied to this room");
     }
-  
-    console.log(`✅ User ${userId} joined room ${documentName}`);
   },
   
 
@@ -49,7 +47,6 @@ const server = Server.configure({
       update: { content: binary },
       create: { id: documentName, content: binary },
     });
-    console.log("💾 Saved to Postgres:", documentName);
   },
 
   // 📦 Load document content when someone joins
@@ -62,7 +59,6 @@ const server = Server.configure({
 
     if (entry) {
       Y.applyUpdate(doc, entry.content);
-      console.log("📥 Loaded from Postgres:", documentName);
     } else {
       console.log("🆕 Creating new doc:", documentName);
     }
