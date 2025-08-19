@@ -1,8 +1,7 @@
 "use client";
 
-import { backendURL } from '@/config/url';
 import { useDocContentStore } from '@/store/DocContentStore';
-import axios from 'axios';
+import axios from "@/lib/axios";
 import React, { useEffect, useRef, useState } from 'react'
 
 
@@ -18,13 +17,14 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
           console.log("Sending content to summarize:", docContent);
           setLoading(true);
           try {
-              const res = await axios.post(`${backendURL}/api/room/summarize`, 
+              const res = await axios.post("/api/room/summarize", 
                   { content: docContent }
               );
               const data = res.data.summary;
               setSummary(data)
           } catch (err) {
-              alert("Error joining room");
+              console.error("Summarization error:", err);
+              alert("Failed to summarize the document.");
           } finally {
               setLoading(false);
           }
@@ -34,12 +34,13 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
           console.log("Sending content to summarize:", docContent);
           setLoading(true);
           try {
-              const res = await axios.post(`${backendURL}/api/room/check-grammar`, 
+              const res = await axios.post("/api/room/check-grammar", 
                   { content: docContent }
               );
               const data = res.data.grammar
               setGrammar(data)
           } catch (err) {
+            console.log(err)
               alert("Error joining room");
           } finally {
               setLoading(false);

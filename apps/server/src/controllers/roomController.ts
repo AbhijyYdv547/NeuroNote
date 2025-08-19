@@ -1,6 +1,5 @@
 import { prismaClient } from "@repo/db/client";
 import { Request,Response } from "express";
-import { ai } from "../lib/geminiAPI";
 import { generateAIResponse } from "../utils/aiHelpers";
 
 export const getChatsController = async (req:Request, res:Response) => {

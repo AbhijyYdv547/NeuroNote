@@ -3,8 +3,8 @@ import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import AuthPage from "@/components/AuthPage";
 import { useRedirectIfLoggedIn } from "@/hooks/useRedirectIfLoggedIn";
-import axios from "axios";
-import { backendURL } from "@/config/url";
+import axios from "@/lib/axios";
+
 
 export default function Signup() {
   const nameRef = useRef<HTMLInputElement>(null);
@@ -28,15 +28,10 @@ export default function Signup() {
 
     try {
       console.log("Entry");
-      const res = await axios.post(`${backendURL}/api/auth/signup`,{
+      const res = await axios.post("/api/auth/signup",{
         email,
         password,
         name,
-      }, {
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        withCredentials: true, 
       }
     );
       if (res.data.message === "Register Successful") {
