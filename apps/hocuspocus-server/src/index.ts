@@ -6,8 +6,10 @@ import jwt,{JwtPayload} from "jsonwebtoken"
 import { JWT_SECRET } from "@repo/backend-common/config";
 import {parse} from "cookie"
 
+const PORT = process.env.PORT ? parseInt(process.env.PORT) : 1234;
+
 const server = Server.configure({
-  port: 1234,
+  port: PORT,
 
   onAuthenticate: async ({ token,request,documentName }) => {
 

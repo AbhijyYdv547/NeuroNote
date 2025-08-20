@@ -4,7 +4,9 @@ import { JWT_SECRET } from "@repo/backend-common/config";
 import { prismaClient } from "@repo/db/client";
 import { parse } from "cookie";
 
-const wss = new WebSocketServer({ port: 8080 });
+
+const PORT = process.env.PORT ? parseInt(process.env.PORT) : 8080;
+const wss = new WebSocketServer({ port: PORT });
 
 interface User {
     ws: WebSocket,
