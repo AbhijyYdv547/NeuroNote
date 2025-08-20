@@ -1,8 +1,9 @@
 import { WebSocket, WebSocketServer } from "ws";
 import jwt from "jsonwebtoken"
-import { JWT_SECRET } from "@repo/backend-common/config";
 import { prismaClient } from "@repo/db/client";
 import { parse } from "cookie";
+import dotenv from "dotenv"
+dotenv.config()
 
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 8080;
@@ -19,7 +20,7 @@ const users: User[] = [];
 
 function checkUser(token: string): string | null {
     try {
-        const decoded = jwt.verify(token, JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
 
         if (typeof decoded == "string") {
             return null;

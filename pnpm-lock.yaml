@@ -32,6 +32,9 @@ importers:
       cookie:
         specifier: ^1.0.2
         version: 1.0.2
+      dotenv:
+        specifier: ^17.2.0
+        version: 17.2.0
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
@@ -260,6 +263,9 @@ importers:
       cookie:
         specifier: ^1.0.2
         version: 1.0.2
+      dotenv:
+        specifier: ^17.2.0
+        version: 17.2.0
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2

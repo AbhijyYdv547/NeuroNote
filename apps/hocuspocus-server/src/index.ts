@@ -3,8 +3,9 @@ import { Server } from "@hocuspocus/server";
 import * as Y from "yjs";
 import {prismaClient} from "@repo/db/client"
 import jwt,{JwtPayload} from "jsonwebtoken"
-import { JWT_SECRET } from "@repo/backend-common/config";
 import {parse} from "cookie"
+import dotenv from "dotenv"
+dotenv.config()
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 1234;
 
@@ -21,7 +22,7 @@ const server = Server.configure({
     if (!tokenFromCookie) throw new Error("Missing auth token in cookies");
 
 
-    const payload : JwtPayload = jwt.verify(tokenFromCookie, JWT_SECRET) as JwtPayload;
+    const payload : JwtPayload = jwt.verify(tokenFromCookie, process.env.JWT_SECRET as string) as JwtPayload;
 
 
     const userId = payload?.userId;

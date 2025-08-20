@@ -1,9 +1,10 @@
-import { JWT_SECRET } from "@repo/backend-common/config";
 import { CreateUserSchema, SigninSchema } from "@repo/common/types";
 import { prismaClient } from "@repo/db/client";
 import bcryptjs from "bcryptjs"
 import { Request,Response } from "express";
 import jwt from "jsonwebtoken"
+import dotenv from "dotenv"
+dotenv.config()
 
 export const signupController =  async (req:Request, res:Response) => {
   const parsedData = CreateUserSchema.safeParse(req.body);
@@ -67,7 +68,7 @@ export const loginController = async (req:Request, res:Response) => {
 
     const token = jwt.sign({
       userId: user.id
-    }, JWT_SECRET,{expiresIn:"1h"})
+    }, process.env.JWT_SECRET as string,{expiresIn:"1h"})
 
     res.cookie("token",token,{
       httpOnly:true,
