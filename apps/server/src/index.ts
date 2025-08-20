@@ -15,10 +15,7 @@ app.use(cors({
     credentials: true,
 }))
 
-app.options("*", cors({
-  origin: process.env.NEXT_APP_URL,
-  credentials: true,
-}));  
+
 app.use(cookieParser())
 
 
@@ -29,9 +26,9 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/room",roomRoutes);
 
 const PORT = Number(process.env.PORT) || 3001; 
+console.log("NEXT_APP_URL:", process.env.NEXT_APP_URL);
+console.log("PORT:", process.env.PORT);
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-console.log("NEXT_APP_URL:", process.env.NEXT_APP_URL);
-console.log("PORT:", process.env.PORT);
