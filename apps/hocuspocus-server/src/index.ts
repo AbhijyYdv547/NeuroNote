@@ -7,7 +7,7 @@ import {parse} from "cookie"
 import dotenv from "dotenv"
 dotenv.config()
 
-const PORT = process.env.PORT ? parseInt(process.env.PORT) : 1234;
+const PORT = Number(process.env.PORT) || 1234;
 
 const server = Server.configure({
   port: PORT,

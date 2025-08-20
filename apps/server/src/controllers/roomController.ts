@@ -16,7 +16,7 @@ export const getChatsController = async (req:Request, res:Response) => {
     const messages = await prismaClient.chat.findMany({
       where: {
         roomId,
-        ...(cursor && { id: { lt: cursor } }) // Pagination logic
+        ...(cursor && { id: { lt: cursor } }) 
       },
       orderBy: {
         id: "desc"
@@ -25,7 +25,7 @@ export const getChatsController = async (req:Request, res:Response) => {
     });
 
     res.json({
-      messages: messages.reverse(), // Return in ascending order for frontend
+      messages: messages.reverse(), 
       nextCursor: messages.length ? messages[messages.length - 1]!.id : null
     });
   } catch (e) {

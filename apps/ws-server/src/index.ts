@@ -6,7 +6,7 @@ import dotenv from "dotenv"
 dotenv.config()
 
 
-const PORT = process.env.PORT ? parseInt(process.env.PORT) : 8080;
+const PORT = Number(process.env.PORT) || 8080;
 const wss = new WebSocketServer({ port: PORT });
 
 interface User {
