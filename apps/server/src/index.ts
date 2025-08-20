@@ -13,7 +13,12 @@ app.use(express.json())
 app.use(cors({
     origin: process.env.NEXT_APP_URL,
     credentials: true,
-  }))
+}))
+
+app.options("*", cors({
+  origin: process.env.NEXT_APP_URL,
+  credentials: true,
+}));  
 app.use(cookieParser())
 
 

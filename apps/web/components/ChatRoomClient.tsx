@@ -2,13 +2,14 @@
 
 import { useEffect, useRef } from "react";
 import ChatBox from "./ChatBox";
+import { wsURL } from "@/config/url";
 
 export default function ChatRoomClient({ roomId }: { roomId: string }) {
   const socketRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
 
-    const socket = new WebSocket(`ws://localhost:8080?roomId=${roomId}`);
+    const socket = new WebSocket(`${wsURL}?roomId=${roomId}`);
     socketRef.current = socket;
 
     socket.onopen = () => {

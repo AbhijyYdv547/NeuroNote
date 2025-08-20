@@ -23,13 +23,13 @@ export const signupController =  async (req:Request, res:Response) => {
         name: parsedData.data.name
       }
     })
-    res.json({
+    res.status(201).json({
   message: "Register Successful",
   userId: user.id
 });
 
   } catch (e) {
-    res.status(411).json({
+    res.status(409).json({
       message: "User already exists with this username"
     })
   }
