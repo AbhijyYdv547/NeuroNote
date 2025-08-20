@@ -10,7 +10,7 @@ export default function Dashboard() {
   function copyToClipboard() {
     navigator.clipboard.writeText(secretCode).then(() => {
       setCopySuccess("Copied!");
-      setTimeout(() => setCopySuccess(""), 2000); // Clear message after 2 seconds
+      setTimeout(() => setCopySuccess(""), 2000); 
     });
   }
 
@@ -44,6 +44,7 @@ export default function Dashboard() {
         alert(res.data.message);
       }
     } catch (err) {
+      console.log("ERROR CR:",err);
       alert("Error creating room");
     } finally {
       setLoadingCreate(false);
@@ -65,6 +66,7 @@ export default function Dashboard() {
         alert(data.message || "Room not found or invalid code");
       }
     } catch (err) {
+      console.log("ERROR JR:", err);
       alert("Error joining room");
     } finally {
       setLoadingJoin(false);
@@ -77,6 +79,7 @@ export default function Dashboard() {
       const res = await axios.get("/api/dashboard/rooms");
       setRooms(res.data.rooms);
     } catch (err: any) {
+      console.log("ERROR SR:", err);
       alert(err.response?.data?.message || "Error loading rooms");
     } finally {
       setLoadingShow(false);
@@ -95,6 +98,7 @@ export default function Dashboard() {
         alert(data.message || "Room not found or invalid code");
       }
     } catch (err: any) {
+      console.log("ERROR JRI:", err);
       alert(err.response?.data?.message || "Error joining room");
     } finally {
       setLoadingJoin(false);
