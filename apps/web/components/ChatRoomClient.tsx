@@ -1,15 +1,26 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import ChatBox from "./ChatBox";
 import { wsURL } from "@/config/url";
+import { getToken } from "@/hooks/useAuthToken";
 
 export default function ChatRoomClient({ roomId }: { roomId: string }) {
   const socketRef = useRef<WebSocket | null>(null);
+  const [token,setToken] = useState(null);
 
   useEffect(() => {
+    const fetchToken = async () => {
+      const t = await getToken();
+      if (t) setToken(t);
+    };
+    fetchToken();
+  }, []);
 
-    const socket = new WebSocket(`${wsURL}?roomId=${roomId}`);
+  useEffect(() => {
+    if(!token) return;
+
+    const socket = new WebSocket(`${wsURL}?token=${token}`);
     socketRef.current = socket;
 
     socket.onopen = () => {
@@ -22,7 +33,7 @@ export default function ChatRoomClient({ roomId }: { roomId: string }) {
         socket.close();
       }
     };
-  }, [roomId]);
+  }, [roomId,token]);
 
   return <ChatBox roomId={roomId} />;
 }

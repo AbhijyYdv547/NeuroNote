@@ -83,6 +83,7 @@ import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import { useDocContentStore } from "@/store/DocContentStore"
 import { hocuspocusURL } from "@/config/url"
+import { getToken } from "@/hooks/useAuthToken"
 
 
 
@@ -199,19 +200,27 @@ const MobileToolbarContent = ({
 )
 
 export function SimpleEditor({ docId,userId }: SimpleEditorProps) {
+
+  const [provider,setProvider] = React.useState<HocuspocusProvider|null>(null);
   const setDocContent = useDocContentStore((state) => state.setDocContent)
-    
-    const ydoc = new Y.Doc();
   
-    const provider = new HocuspocusProvider({
-      url: `${hocuspocusURL}`,
-      name: docId,
-      document: ydoc,
-      parameters: {
-        credentials: "include",
-      },
-      token:"dummy"
-    });
+  const ydoc = React.useMemo(() => new Y.Doc(),[]);
+  
+  React.useEffect(()=>{
+    const fetchToken = async () => {
+        const token = await getToken()
+        if(!token) return;
+
+      const p = new HocuspocusProvider({
+        url: `${hocuspocusURL}`,
+        name: docId,
+        document: ydoc,
+        token: token
+      });
+      setProvider(p)
+      }
+      fetchToken()
+    },[docId, ydoc])
   
   const isMobile = useMobile()
   const windowSize = useWindowSize()

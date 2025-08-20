@@ -64,3 +64,18 @@ export const grammarCheckContent = (req: Request, res: Response) => {
   `;
   return generateAIResponse(req, res, buildGrammarPrompt, "grammar");
 };
+
+
+export const tokenController = (req: Request, res: Response) => {
+      const { token } = req.cookies;
+
+    if (!token) {
+        res.status(401).json({ error: "Unauthorized" });
+        return;
+    }
+
+    res.json({
+      token:token
+    })
+    return;
+}

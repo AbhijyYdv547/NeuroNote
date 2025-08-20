@@ -12,17 +12,12 @@ const PORT = Number(process.env.PORT) || 1234;
 const server = Server.configure({
   port: PORT,
 
-  onAuthenticate: async ({ token,request,documentName }) => {
+  onAuthenticate: async ({ token,documentName }) => {
 
-    const cookieHeader = request?.headers?.cookie || "";
-
-    const cookies = parse(cookieHeader);
-    const tokenFromCookie = cookies.token;
-
-    if (!tokenFromCookie) throw new Error("Missing auth token in cookies");
+    if (!token) throw new Error("Missing auth token");
 
 
-    const payload : JwtPayload = jwt.verify(tokenFromCookie, process.env.JWT_SECRET as string) as JwtPayload;
+    const payload : JwtPayload = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
 
 
     const userId = payload?.userId;

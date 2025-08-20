@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { backendURL, wsURL } from "@/config/url";
 import axios from "@/lib/axios";
+import { getToken } from "@/hooks/useAuthToken";
 
 interface ChatMessage {
   sender: string;
@@ -22,6 +23,7 @@ export default function ChatBox({ roomId }: { roomId: string }) {
   const [input, setInput] = useState("");
   const [currentUser, setCurrentUser] = useState<ChatUser | null>(null);
   const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
+  const [token, setToken] = useState(null);
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -40,11 +42,20 @@ export default function ChatBox({ roomId }: { roomId: string }) {
     fetchUser();
   }, []);
 
+  useEffect(() => {
+    const fetchToken = async () => {
+      const t = await getToken();
+      if (t) setToken(t);
+    };
+    fetchToken();
+  }, []);
 
   useEffect(() => {
+    
     if (!currentUser) return;
+    if(!token) return;
 
-    const ws = new WebSocket(`${wsURL}?roomId=${roomId}`);
+    const ws = new WebSocket(`${wsURL}?token=${token}`);
 
     ws.onopen = () => {
       ws.send(JSON.stringify({ type: "join_room", roomId }));
@@ -108,7 +119,7 @@ export default function ChatBox({ roomId }: { roomId: string }) {
       }
       ws.close();
     };
-  }, [roomId, currentUser]);
+  }, [roomId, currentUser,token]);
 
   // Scroll to bottom on new messages
   useEffect(() => {

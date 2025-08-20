@@ -1,7 +1,6 @@
 import { WebSocket, WebSocketServer } from "ws";
 import jwt from "jsonwebtoken"
 import { prismaClient } from "@repo/db/client";
-import { parse } from "cookie";
 import dotenv from "dotenv"
 dotenv.config()
 
@@ -35,13 +34,23 @@ function checkUser(token: string): string | null {
 }
 
 wss.on("connection", function connection(ws, request) {
-  const cookieHeader = request.headers.cookie || "";
-  const cookies = parse(cookieHeader);
-  const token = cookies.token || "";
+  if(!request.url) {
+    ws.send(JSON.stringify({ type: "error", message: "Missing URL" }));
+    ws.close()
+    return;
+  }
+  const url = new URL(request.url,"http://localhost");
+  const token = url.searchParams.get("token");
+  if(!token) {
+    ws.send(JSON.stringify({ type: "error", message: "Token missing" }));
+    ws.close()
+    return;
+  }
 
   const userId = checkUser(token);
 
     if (userId == null) {
+      ws.send(JSON.stringify({ type: "error", message: "Invalid or expired token" }));
         ws.close()
         return
     }
