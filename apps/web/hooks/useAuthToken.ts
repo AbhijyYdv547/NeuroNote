@@ -1,8 +1,8 @@
-import { backendURL } from "@/config/url";
-import axios from "axios";
+
+import axios from "@/lib/axios";
 
 export async function clearToken() {
- const res = await axios.post(`${backendURL}/api/auth/logout`,{},
+  axios.post(`/api/auth/logout`,{},
   {
         headers: {
           'Content-Type': 'application/json'

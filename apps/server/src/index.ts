@@ -14,7 +14,7 @@ app.use(cors({
     origin: process.env.NEXT_APP_URL,
     credentials: true,
   }))
-  app.use(cookieParser())
+app.use(cookieParser())
 
 
 app.use("/api/auth",authRoutes)

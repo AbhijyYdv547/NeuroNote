@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import AuthPage from "@/components/AuthPage";
 import { useRedirectIfLoggedIn } from "@/hooks/useRedirectIfLoggedIn";
-import axios from "axios"
+import axios from "@/lib/axios"
 
 export default function Login() {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -20,11 +20,8 @@ export default function Login() {
 
     try {
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/login`,
+        "/api/auth/login",
         { email, password },
-        {
-          withCredentials: true,
-        }
       );
       if (res.data.message === "Login Successful") {
         router.push("/dashboard");
