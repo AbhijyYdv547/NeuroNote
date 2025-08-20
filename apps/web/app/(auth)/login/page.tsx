@@ -18,18 +18,20 @@ export default function Login() {
     const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
 
+    if (!email || !password) {
+      console.error("Please fill in all fields");
+      return;
+    }
+
     try {
-      const res = await axios.post(
-        "/api/auth/login",
-        { email, password },
-      );
+      const res = await axios.post("/api/auth/login",{ email, password });
       if (res.data.message === "Login Successful") {
         router.push("/dashboard");
       } else {
         console.error("Login failed", res.data);
       }
-    } catch (err) {
-      console.error("Login error", err);
+    } catch (err: any) {
+      console.error("Login error", err.response?.data || err);
     }
   }
   

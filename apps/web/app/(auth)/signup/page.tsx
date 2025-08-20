@@ -38,8 +38,8 @@ export default function Signup() {
       } else {
         console.error("Register failed", res.data);
       }
-    } catch (err) {
-      console.error("Registration error", err);
+    } catch (err:any) {
+      console.error("Registration error", err.response?.data || err);
     }
     }
   
