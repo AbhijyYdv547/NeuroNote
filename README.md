@@ -1,29 +1,29 @@
-# 🧠 NeuroNote
+# NeuroNote
 
 **AI-powered collaborative note-taking tool** that brings teams and individuals together to write, edit, and enhance content in real-time. Powered by **Tiptap**, **Hocuspocus**, and **Gemini API**, NeuroNote offers intelligent summarization, grammar checks, and seamless collaboration—all in one place.
 
 ---
 
-## 🚀 Features
+## Features
 
-* 🔐 User authentication (Signup/Login)
-* ✍️ Rich-text editor with Tiptap (bold, italic, headings, lists, etc.)
-* 🔁 Real-time collaboration with conflict resolution via Hocuspocus
-* 🧠 AI-powered summarization and grammar checks using Gemini API
-* 📤 Chat function to communicate with team members
-* 💾 Persistent storage with PostgreSQL and Prisma ORM
-* 🏷️ **Secret code-based room joining**:
+* User authentication (Signup/Login)
+* Rich-text editor with Tiptap (bold, italic, headings, lists, etc.)
+* Real-time collaboration with conflict resolution via Hocuspocus
+* AI-powered summarization and grammar checks using Gemini API
+* Chat function to communicate with team members
+* Persistent storage with PostgreSQL and Prisma ORM
+* **Secret code-based room joining**:
   - A **secret code** is generated when a room is created
   - Users **must enter this code** to join a room for the first time
   - Once joined, the room will be listed in their dashboard and can be rejoined **without needing the code again**
-* 📚 **AI Sidebar for collaborative documents**:
+* **AI Sidebar for collaborative documents**:
   - Instantly summarize or grammar-check the live document content
   - Trigger AI actions with one click, without leaving the editor
-* 💻 Responsive, clean UI with smooth animations
+* Responsive, clean UI with smooth animations
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 ### Frontend
 
@@ -46,7 +46,7 @@
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 <details>
 <summary>Landing Page</summary>
@@ -95,18 +95,18 @@
 
 ---
 
-## ⚙️ Getting Started
+## Getting Started
 
 ### Manual Setup
 
 ```bash
-📋 Prerequisites
+Prerequisites
 Node.js (v18+ recommended)
 pnpm (Install via npm i -g pnpm)
 PostgreSQL (Locally running, or use cloud-hosted)
 Git
 
-🔧 Steps
+Steps
 # Clone the repository
 git clone https://github.com/your-username/neuronote
 cd neuronote
@@ -115,7 +115,7 @@ cd neuronote
 pnpm install
 
 # Create environment variables
-Change .env.example to .env file
+Change .env.example to .env file and add same JWT_SECRET in every folder
 # Also, add your Gemini API key to /apps/server/.env
 # Change the Database url in /packages/db folder to a proper postgres db url
 
@@ -136,20 +136,20 @@ Hocuspocus: ws://localhost:1234
 
 ### Docker setup 
 ```
-🧾 1. Prerequisites
+1. Prerequisites
 Install Docker
 
 ## Clone the repo:
 git clone https://github.com/your-username/neuronote
 cd neuronote
 
-🛠️ 2. Configure Environment Variables
-Rename .env.example to .env in all the directories.
+2. Configure Environment Variables
+Rename .env.example to .env in all the directories and add same JWT_SECRET
 
 # Add your Gemini API Key to /apps/server/.env:
 GEMINI_API_KEY=your_gemini_api_key
 
-📦 3. Run All Services
+3. Run All Services
 # Use the following command to build and start everything:
 
 docker-compose up --build
@@ -161,7 +161,7 @@ ws-server: WebSocket chat backend
 hocuspocus-server: Real-time Tiptap collaboration server
 postgres: PostgreSQL database
 
-✅ 4. Access the App
+4. Access the App
 # Once Docker Compose finishes:
 
 Frontend: http://localhost:3000
@@ -175,7 +175,7 @@ Hocuspocus: ws://localhost:1234
 
 ---
 
-## 📦 Scripts
+## Scripts
 
 | Script         | Description                  |
 | -------------- | ---------------------------- |
@@ -186,7 +186,7 @@ Hocuspocus: ws://localhost:1234
 
 ---
 
-## 🗂️ Folder Structure
+## Folder Structure
 
 ```
 apps/
@@ -209,17 +209,17 @@ packages/
 
 * [X] Add AI assistant with summarization and grammar-check
 * [X] Dockerize the app
-* [ ] Deploy full-stack app
+* [X] Deploy full-stack app
 * [ ] Add note version history
 
 ---
 
-## 📬 Feedback or Collaboration
+## Feedback or Collaboration
 
 Interested in contributing or sharing feedback? Feel free to connect:
 
-* 📫 Email: yadavabhjay@gmail.com
-* 🌐 [Portfolio](https://portfolio1-two-xi.vercel.app/)
-* 💼 [LinkedIn](https://linkedin.com/in/abj-ydv)
+* Email: yadavabhjay@gmail.com
+* [Portfolio](https://portfolio1-two-xi.vercel.app/)
+* [LinkedIn](https://linkedin.com/in/abj-ydv)
 
 ---
