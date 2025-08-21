@@ -23,6 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <link rel="icon" href="/logo-circle.svg" sizes="any" />
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}
       </body>

@@ -19,12 +19,16 @@ export function ResizableNav() {
             link: "#features",
         },
         {
-            name: "Pricing",
-            link: "#pricing",
+            name: "Workflow",
+            link: "#workflow",
         },
         {
-            name: "Contact",
-            link: "#contact",
+            name: "Demo",
+            link: "#demo",
+        },
+        {
+            name: "FAQs",
+            link: "#faqs",
         },
     ];
 
@@ -38,7 +42,7 @@ export function ResizableNav() {
                     <NavbarLogo />
                     <NavItems items={navItems} />
                     <div className="flex items-center gap-4">
-                        <NavbarButton variant="dark" href="/login">Login</NavbarButton>
+                        <NavbarButton variant="custom" href="/login">Login</NavbarButton>
                         <NavbarButton variant="gradient" href="/signup">Signup</NavbarButton>
                     </div>
                 </NavBody>
@@ -70,17 +74,19 @@ export function ResizableNav() {
                         <div className="flex w-full flex-col gap-4">
                             <NavbarButton
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                variant="primary"
+                                variant="custom"
                                 className="w-full"
+                                href="/login"
                             >
                                 Login
                             </NavbarButton>
                             <NavbarButton
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                variant="primary"
+                                variant="custom"
                                 className="w-full"
+                                href="/signup"
                             >
-                                Book a call
+                                Signup
                             </NavbarButton>
                         </div>
                     </MobileNavMenu>
