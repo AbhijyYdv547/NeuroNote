@@ -13,7 +13,6 @@ export async function clearToken() {
  
 }
 
-
 export async function getToken(){
     try {
       const res = await axios.get("/api/room/get-token");
