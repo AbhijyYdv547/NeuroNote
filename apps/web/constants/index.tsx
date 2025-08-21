@@ -15,41 +15,42 @@ export const navItems = [
 export const features = [
   {
     icon: <BotMessageSquare />,
-    text: "AI-Powered Assistance",
+    text: "Collaborative Text Editing",
     description:
-      "Get intelligent content suggestions, auto-completion, and smart summarization powered by advanced AI technology.",
+      "Edit documents together in real-time using Tiptap and Hocuspocus, ensuring smooth, conflict-free teamwork.",
   },
   {
     icon: <Fingerprint />,
-    text: "Rich Text Editor",
+    text: "Team Chat Integration",
     description:
-      "Create beautiful, structured notes with Tiptap's powerful rich-text editor supporting markdown, embeds, and mentions.",
+      "Communicate with your team right inside NeuroNote with built-in chat for seamless discussions and decisions.",
   },
   {
     icon: <ShieldHalf />,
-    text: "Conflict-Free Collaboration",
+    text: "Secure Authentication",
     description:
-      "Work simultaneously with your team using Hocuspocus for seamless real-time editing without conflicts.",
+      "Your work is safe with cookie-based authentication and role-based access, built for privacy and security.",
   },
   {
     icon: <BatteryCharging />,
     text: "Real-Time Synchronization",
     description:
-      "See changes instantly as your team collaborates, with automatic saving and sync across all devices.",
+      "Instant updates across text, chat, and rooms so everyone stays on the same page, literally.",
   },
   {
     icon: <PlugZap />,
-    text: "Seamless Export Options",
+    text: "Room-Based Collaboration",
     description:
-      "Export your collaborative notes to PDF or Markdown format for easy sharing and archival.",
+      "Create or join rooms to organize your team’s notes, conversations, and documents in one place.",
   },
   {
     icon: <GlobeLock />,
-    text: "Secure & Responsive",
+    text: "Future-Ready Features",
     description:
-      "Built with modern React and Next.js for a fast, secure, and responsive experience across all devices.",
+      "Planned support for video calls, integrations, and advanced analytics to make teamwork even more powerful.",
   },
 ];
+
 
 export const checklistItems = [
   {
