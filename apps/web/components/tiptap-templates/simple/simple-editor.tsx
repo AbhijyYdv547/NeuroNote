@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { EditorContent, EditorContext, useEditor } from "@tiptap/react"
+import { AnyExtension, EditorContent, EditorContext, useEditor } from "@tiptap/react"
 
 // --- Tiptap Core Extensions ---
 import { StarterKit } from "@tiptap/starter-kit"
@@ -83,6 +83,7 @@ import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import { useDocContentStore } from "@/store/DocContentStore"
 import { hocuspocusURL } from "@/config/url"
+import { getToken } from "@/hooks/useAuthToken"
 
 
 
@@ -199,19 +200,27 @@ const MobileToolbarContent = ({
 )
 
 export function SimpleEditor({ docId,userId }: SimpleEditorProps) {
+
+  const [provider,setProvider] = React.useState<HocuspocusProvider | null>(null);
   const setDocContent = useDocContentStore((state) => state.setDocContent)
-    
-    const ydoc = new Y.Doc();
   
-    const provider = new HocuspocusProvider({
-      url: `${hocuspocusURL}`,
-      name: docId,
-      document: ydoc,
-      parameters: {
-        credentials: "include",
-      },
-      token:"dummy"
-    });
+  const ydoc = React.useMemo(() => new Y.Doc(),[]);
+  
+  React.useEffect(()=>{
+    const fetchToken = async () => {
+        const token = await getToken()
+        if(!token) return;
+
+      const p = new HocuspocusProvider({
+        url: `${hocuspocusURL}`,
+        name: docId,
+        document: ydoc,
+        token: token
+      });
+      setProvider(p)
+      }
+      fetchToken()
+    },[docId, ydoc])
   
   const isMobile = useMobile()
   const windowSize = useWindowSize()
@@ -219,6 +228,40 @@ export function SimpleEditor({ docId,userId }: SimpleEditorProps) {
     "main" | "highlighter" | "link"
   >("main")
   const toolbarRef = React.useRef<HTMLDivElement>(null)
+
+  const extensionsArray: AnyExtension[] = [
+    StarterKit.configure({ history: false }),
+    TextAlign.configure({ types: ["heading", "paragraph"] }),
+    Underline,
+    TaskList,
+    TaskItem.configure({ nested: true }),
+    Highlight.configure({ multicolor: true }),
+    Image,
+    Typography,
+    Superscript,
+    Subscript,
+    Selection,
+    ImageUploadNode.configure({
+      accept: "image/*",
+      maxSize: MAX_FILE_SIZE,
+      limit: 3,
+      upload: handleImageUpload,
+      onError: (error) => console.error("Upload failed:", error),
+    }),
+    TrailingNode,
+    Link.configure({ openOnClick: false }),
+    Collaboration.configure({ document: ydoc }),
+    ...(provider
+      ? [CollaborationCursor.configure({
+        provider,
+        user: {
+          name: `User: ${userId}`,
+          color: `hsl(0, 82%, 56%)`,
+        },
+      })]
+      : []),
+  ];
+
 
   //@ts-ignore
   const editor = useEditor({
@@ -231,41 +274,9 @@ export function SimpleEditor({ docId,userId }: SimpleEditorProps) {
         "aria-label": "Main content area, start typing to enter text.",
       },
     },
-    extensions: [
-      StarterKit.configure({ history: false }), 
-      TextAlign.configure({ types: ["heading", "paragraph"] }),
-      Underline,
-      TaskList,
-      TaskItem.configure({ nested: true }),
-      Highlight.configure({ multicolor: true }),
-      Image,
-      Typography,
-      Superscript,
-      Subscript,
-
-      Selection,
-      ImageUploadNode.configure({
-        accept: "image/*",
-        maxSize: MAX_FILE_SIZE,
-        limit: 3,
-        upload: handleImageUpload,
-        onError: (error) => console.error("Upload failed:", error),
-      }),
-      TrailingNode,
-      Link.configure({ openOnClick: false }),
-      Collaboration.configure({
-              document: ydoc,
-            }),
-            CollaborationCursor.configure({
-              provider,
-              user: {
-                name: `User: ${userId}`,
-                color: `hsl(0, 82%, 56%)`,
-            },
-        }),
-    ],
+    extensions: extensionsArray,
     content: content,
-  })
+  },[provider])
 
   React.useEffect(() => {
     if (!editor) return;
@@ -279,7 +290,7 @@ export function SimpleEditor({ docId,userId }: SimpleEditorProps) {
     editor.on('update', update);
 
     () => editor.off('update', update); 
-  }, [editor])
+  }, [editor,setDocContent])
 
 
   const bodyRect = useCursorVisibility({
