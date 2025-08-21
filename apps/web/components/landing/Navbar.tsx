@@ -82,7 +82,7 @@ export function ResizableNav() {
                             </NavbarButton>
                             <NavbarButton
                                 onClick={() => setIsMobileMenuOpen(false)}
-                                variant="custom"
+                                variant="gradient"
                                 className="w-full"
                                 href="/signup"
                             >

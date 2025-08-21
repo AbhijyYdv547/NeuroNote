@@ -1,9 +1,12 @@
-import Link from "next/link"; 
+"use client";
+import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 
 const HeroSection = () => {
+    const router = useRouter()
     return (
         <div className="flex flex-col items-center mt-6 lg:mt-20" id="hero">
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl text-center tracking-wide">
                 NeuroNote: AI-powered
                 <span className="bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
                     {" "}
@@ -12,22 +15,25 @@ const HeroSection = () => {
             </h1>
             <p className="mt-10 text-lg text-center text-neutral-500 max-w-4xl">
                 Transform your team's productivity with intelligent note-taking. Real-time collaboration,
-                AI-powered content enhancement, and seamless synchronization - all in one beautiful interface.
-                Start collaborating smarter today!
+                AI-powered content enhancement, and seamless synchronization.
             </p>
-            <div className="flex justify-center my-10">
-                <Link
-                    href="/signup"
-                    className="bg-gradient-to-r from-blue-500 to-blue-700 py-3 px-4 mx-3 rounded-md text-white font-medium hover:from-blue-600 hover:to-blue-800 transition-all duration-200"
+            <div className="flex justify-center my-10 md:gap-8 gap-2">
+                <Button
+                    className="font-bold"
+                    onClick={() => router.push("/login")}
+                    size={"xl"}
+                    variant={"custom"}
                 >
                     Start for free
-                </Link>
-                <Link
-                    href="/docs"
-                    className="py-3 px-4 mx-3 rounded-md border border-neutral-300 text-neutral-700 hover:bg-neutral-50 transition-all duration-200"
-                >
-                    Learn more
-                </Link>
+                </Button>
+                <Button
+                    onClick={()=> router.push("/signup")}
+                    size={"xl"}
+                    variant={"secondary"}
+                    className="font-bold"
+                    >
+                    Login to account
+                </Button>
             </div>
             <div className="flex mt-10 justify-center">
                 <video
