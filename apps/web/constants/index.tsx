@@ -52,28 +52,25 @@ export const features = [
 ];
 
 
-export const checklistItems = [
+export const workflowHighlights = [
   {
-    title: "Real-time Collaborative Editing",
-    description:
-      "Edit notes simultaneously with your team using Tiptap's rich-text editor and Hocuspocus for seamless conflict resolution.",
+    label: "Sync Latency",
+    description: "Real-time collaboration with near-instant updates across devices."
   },
   {
-    title: "AI-Powered Content Enhancement",
-    description:
-      "Leverage Gemini API for intelligent summarization, content suggestions, and automated note enhancement (coming soon).",
+    label: "Data Integrity",
+    description: "Conflict resolution powered by Hocuspocus ensures no data loss."
   },
   {
-    title: "Rich Content Support",
-    description:
-      "Create dynamic notes with markdown, embeds, mentions, and rich formatting to capture ideas exactly as you envision them.",
+    label: "Security",
+    description: "Your notes are encrypted in transit and at rest for maximum safety."
   },
   {
-    title: "Export & Share Effortlessly",
-    description:
-      "Export your collaborative notes to PDF or Markdown format and share your work with anyone, anywhere.",
-  },
+    label: "Device Support",
+    description: "Collaborate seamlessly on web, tablet, and mobile devices."
+  }
 ];
+
 
 export const resourcesLinks = [
   { href: "#", text: "Getting Started" },
