@@ -10,27 +10,12 @@ import {
     MobileNavToggle,
     MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
+import { navItems } from "@/constants";
+import Image from "next/image";
 import { useState } from "react";
 
 export function ResizableNav() {
-    const navItems = [
-        {
-            name: "Features",
-            link: "#features",
-        },
-        {
-            name: "Workflow",
-            link: "#workflow",
-        },
-        {
-            name: "Demo",
-            link: "#demo",
-        },
-        {
-            name: "FAQs",
-            link: "#faqs",
-        },
-    ];
+
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -43,7 +28,13 @@ export function ResizableNav() {
                     <NavItems items={navItems} />
                     <div className="flex items-center gap-4">
                         <NavbarButton variant="custom" href="/login">Login</NavbarButton>
-                        <NavbarButton variant="gradient" href="/signup">Signup</NavbarButton>
+                        <NavbarButton
+                            variant="primary"
+                            className="bg-slate-200 hover:bg-gray-50 rounded-full"
+                            href="https://github.com/AbhijyYdv547/NeuroNote"
+                        >
+                            <Image src={"/git.svg"} alt="" width={25} height={25} />
+                        </NavbarButton>
                     </div>
                 </NavBody>
 
@@ -80,14 +71,17 @@ export function ResizableNav() {
                             >
                                 Login
                             </NavbarButton>
-                            <NavbarButton
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                variant="gradient"
-                                className="w-full"
-                                href="/signup"
-                            >
-                                Signup
-                            </NavbarButton>
+                            <div className="flex w-full flex-col gap-4">
+                                <NavbarButton
+                                    href="https://github.com/AbhijyYdv547/ResumeBuilder"
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    variant="secondary"
+                                    className="flex items-center justify-center gap-1 w-full bg-slate-200 hover:bg-gray-50"
+                                >
+                                    <Image src={"/git.svg"} alt="" width={30} height={30} />
+                                    <span className="text-black">Github</span>
+                                </NavbarButton>
+                            </div>
                         </div>
                     </MobileNavMenu>
                 </MobileNav>

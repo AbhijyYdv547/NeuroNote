@@ -5,12 +5,25 @@ import { ShieldHalf } from "lucide-react";
 import { PlugZap } from "lucide-react";
 import { GlobeLock } from "lucide-react";
 
-export const navItems = [
-  { label: "About", href: "#hero" },
-  { label: "Features", href: "#features" },
-  { label: "Workflow", href: "#workflow" },
-  { label: "Testimonials", href: "#testimonials" },
-];
+
+ export const navItems = [
+        {
+            name: "Features",
+            link: "#features",
+        },
+        {
+            name: "Workflow",
+            link: "#workflow",
+        },
+        {
+            name: "Demo",
+            link: "#demo",
+        },
+        {
+            name: "FAQs",
+            link: "#faqs",
+        },
+    ];
 
 export const features = [
   {
@@ -71,27 +84,28 @@ export const workflowHighlights = [
   }
 ];
 
+export const faqItems = [
+  {
+    label: "What is NeuroNote?",
+    description: "NeuroNote is a collaborative note-taking platform that combines real-time editing with AI assistance to help teams stay aligned and productive."
+  },
+  {
+    label: "Do I need an account to use NeuroNote?",
+    description: "Yes, creating an account lets you securely join rooms, collaborate with your team, and save your notes in one place."
+  },
+  {
+    label: "Can I use NeuroNote on mobile devices?",
+    description: "Absolutely! NeuroNote works seamlessly on desktop, tablet, and mobile browsers with full feature support."
+  },
+  {
+    label: "Is my data secure?",
+    description: "All data is encrypted in transit and at rest, and we use industry-standard practices to ensure your notes remain private and secure."
+  },
+  {
+    label: "Does NeuroNote support AI-powered features?",
+    description: "Yes! NeuroNote includes AI-powered summarization and grammar suggestions to help you create clear and concise notes effortlessly."
+  }
 
-export const resourcesLinks = [
-  { href: "#", text: "Getting Started" },
-  { href: "#", text: "Documentation" },
-  { href: "#", text: "User Guide" },
-  { href: "#", text: "API Reference" },
-  { href: "#", text: "Community Support" },
 ];
 
-export const platformLinks = [
-  { href: "#", text: "Features" },
-  { href: "#", text: "Collaboration Tools" },
-  { href: "#", text: "AI Integration" },
-  { href: "#", text: "Export Options" },
-  { href: "#", text: "Release Notes" },
-];
 
-export const communityLinks = [
-  { href: "#", text: "Events" },
-  { href: "#", text: "Meetups" },
-  { href: "#", text: "Webinars" },
-  { href: "#", text: "Beta Testing" },
-  { href: "#", text: "Feedback" },
-];

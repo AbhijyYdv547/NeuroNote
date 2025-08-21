@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 
 const HeroSection = () => {
@@ -14,26 +13,22 @@ const HeroSection = () => {
                 </span>
             </h1>
             <p className="mt-10 text-lg text-center text-neutral-500 max-w-4xl">
-                Transform your team's productivity with intelligent note-taking. Real-time collaboration,
+                Transform your team&apos;s productivity with intelligent note-taking. Real-time collaboration,
                 AI-powered content enhancement, and seamless synchronization.
             </p>
             <div className="flex justify-center my-10 md:gap-8 gap-2">
-                <Button
-                    className="font-bold"
-                    onClick={() => router.push("/login")}
-                    size={"xl"}
-                    variant={"custom"}
-                >
-                    Start for free
-                </Button>
-                <Button
-                    onClick={()=> router.push("/signup")}
-                    size={"xl"}
-                    variant={"secondary"}
-                    className="font-bold"
-                    >
-                    Login to account
-                </Button>
+                <button className="p-1 relative" onClick={()=> router.push("/signup")}>
+                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
+                    <div className="px-8 py-2  bg-zinc-900 rounded-[6px]  relative group transition duration-200 text-white hover:bg-transparent">
+                        Sign up
+                    </div>
+                </button>
+                <button className="p-1 relative" onClick={() => router.push("/login")}>
+                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
+                    <div className="px-8 py-2  bg-zinc-900 rounded-[6px]  relative group transition duration-200 text-white hover:bg-transparent">
+                        Login
+                    </div>
+                </button>
             </div>
             <div className="flex mt-10 justify-center">
                 <video

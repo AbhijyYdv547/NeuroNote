@@ -42,21 +42,23 @@ const Workflow = () => {
                     </div>
                 </div>
                 
-                <div className="flex items-center">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
                     {workflowHighlights.map((item, index) => (
-                        <div key={index} className="flex gap-4 items-start">
-                            <div className="text-blue-600 p-2 bg-muted rounded-full">
+                        <div
+                            key={index}
+                            className="flex gap-4 items-start p-4 border border-blue-500 rounded-xl shadow-sm hover:shadow-md transition"
+                        >
+                            <div className="text-blue-600 p-2 bg-blue-100 rounded-full">
                                 <CheckCircle2 size={20} />
                             </div>
                             <div>
-                                <h4 className="text-lg font-semibold">{item.label}</h4>
-                                <p className="text-sm text-muted-foreground">
-                                    {item.description}
-                                </p>
+                                <h4 className="text-lg font-semibold text-blue-700">{item.label}</h4>
+                                <p className="text-sm text-muted-foreground">{item.description}</p>
                             </div>
                         </div>
                     ))}
                 </div>
+
             </div>
         </section>
     );
