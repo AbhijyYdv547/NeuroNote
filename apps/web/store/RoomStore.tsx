@@ -1,13 +1,14 @@
 import { create } from "zustand"
 import axios from "@/lib/axios"
+import { RefObject } from "react";
 
 interface RoomStoreState {
     loadingShow: boolean;
     loadingJoin: boolean;
     rooms: [];
     showRooms: () => Promise<void>
-    joinRoom: (secretCode: string, router:any) => Promise<void>;
-    joinRoomViaId: (roomId: number, router: any) => Promise<void>; 
+    joinRoom: (secretCode: RefObject<HTMLInputElement | null>, router: any) => Promise<void>;
+    joinRoomViaId: (roomId: number, router: any) => Promise<void>;
 }
 
 
@@ -17,23 +18,29 @@ export const useRoomStore = create<RoomStoreState>((set) => ({
     rooms: [],
 
     showRooms: async () => {
-        set({ loadingShow: true});
+        set({ loadingShow: true });
         try {
             const res = await axios.get("/api/dashboard/rooms");
-            set({rooms:res.data.rooms});
+            set({ rooms: res.data.rooms });
         } catch (err: any) {
             console.log("ERROR SR:", err);
             alert(err.response?.data?.message || "Error loading rooms");
         } finally {
-            set({loadingShow: false});
+            set({ loadingShow: false });
         }
     },
 
-    joinRoom: async (secretCode,router) => {
+    joinRoom: async (secretCode, router) => {
         set({ loadingJoin: true });
+        const code = secretCode.current?.value.trim();
+
+        if (!code) {
+            alert("Room code is required");
+            return;
+        }
         try {
             const res = await axios.post("/api/dashboard/join-room", {
-                secretCode: secretCode,
+                secretCode: code,
             });
 
             const data = res.data;
@@ -52,7 +59,7 @@ export const useRoomStore = create<RoomStoreState>((set) => ({
     },
 
     joinRoomViaId: async (roomId, router) => {
-        set({loadingJoin: true})
+        set({ loadingJoin: true })
         try {
             const res = await axios.get(`/api/dashboard/room/${roomId}`);
             const data = res.data;
@@ -66,7 +73,7 @@ export const useRoomStore = create<RoomStoreState>((set) => ({
             console.log("ERROR JRI:", err);
             alert(err.response?.data?.message || "Error joining room");
         } finally {
-            set({loadingJoin: false})
+            set({ loadingJoin: false })
         }
     }
 
