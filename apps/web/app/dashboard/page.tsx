@@ -5,10 +5,15 @@ import CreateRoomBox from "@/components/CreateRoomBox";
 
 export default function Dashboard() {
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col md:flex-row  items-center py-10 px-4 gap-10">
-      <DashboardNav/>
+    <div>
+    <DashboardNav/>
+    <div className="min-h-screen bg-black text-white py-20 overflow-y-hidden">
+      <div className="flex md:flex-row flex-col md:justify-evenly gap-8">
       <CreateRoomBox/>
+          <div className="hidden md:block w-px bg-white mx-8" />
       <JoinRoomBox/>
+      </div>
+    </div>
     </div>
   );
 }

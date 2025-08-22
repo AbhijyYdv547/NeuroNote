@@ -57,7 +57,7 @@ const CreateRoomBox = () => {
     }
 
     return (
-        <div className="shadow-input mx-auto w-full max-w-md rounded-none p-4 md:rounded-2xl md:p-8 bg-zinc-900">
+        <div className="shadow-input mx-auto w-full max-w-md p-4 rounded-2xl md:p-8 bg-zinc-900">
             <div className="flex items-center">
                 <div className="flex-1 text-center">
                     <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200 text-center">
