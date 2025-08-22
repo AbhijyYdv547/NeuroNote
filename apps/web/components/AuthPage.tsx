@@ -1,6 +1,6 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { IconArrowLeft, IconBrandGoogle } from "@tabler/icons-react";
+import { IconArrowLeft } from "@tabler/icons-react";
 import React, { FormEvent, RefObject } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -89,17 +89,6 @@ export default function AuthPage({
         </form>
         <div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
 
-        <div className="flex justify-evenly items-center my-8">
-          <button className="group/btn shadow-input relative flex h-10 items-center justify-start space-x-2 rounded-md bg-gray-50 px-4 font-medium text-black dark:bg-zinc-900 shadow-[0px_0px_1px_1px_#262626]"
-            
-          >
-            <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-            <span className="text-sm text-neutral-700 dark:text-neutral-300">
-              Google
-            </span>
-            <BottomGradient />
-          </button>
-        </div>
 
         {login ? (
           <div className="text-center text-sm text-gray-50">

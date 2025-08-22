@@ -10,13 +10,17 @@ import {
     MobileNavToggle,
     MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
-import { navItems } from "@/constants";
+import { clearToken } from "@/hooks/useAuthToken";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export function ResizableNav() {
+const DashboardNav = () => {
 
+      function handleLogout() {
+        clearToken();
+        router.push("/");
+      }
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const router = useRouter();
@@ -27,9 +31,8 @@ export function ResizableNav() {
                 {/* Desktop Navigation */}
                 <NavBody>
                     <NavbarLogo />
-                    <NavItems items={navItems} />
                     <div className="flex items-center gap-4">
-                        <NavbarButton variant="custom" onClick={()=> router.push("/login")}>Login</NavbarButton>
+                        <NavbarButton variant="custom" onClick={handleLogout}>Logout</NavbarButton>
                         <NavbarButton
                             variant="primary"
                             className="bg-slate-200 hover:bg-gray-50 rounded-full"
@@ -54,24 +57,17 @@ export function ResizableNav() {
                         isOpen={isMobileMenuOpen}
                         onClose={() => setIsMobileMenuOpen(false)}
                     >
-                        {navItems.map((item, idx) => (
-                            <a
-                                key={`mobile-link-${idx}`}
-                                href={item.link}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className="relative text-neutral-600 dark:text-neutral-300"
-                            >
-                                <span className="block">{item.name}</span>
-                            </a>
-                        ))}
                         <div className="flex w-full flex-col gap-4">
                             <NavbarButton
-                                onClick={() => setIsMobileMenuOpen(false)}
+                                onClick={() =>{
+                                    setIsMobileMenuOpen(false)
+                                    handleLogout()
+                                } }
                                 variant="custom"
                                 className="w-full"
-                                href="/login"
+                                href="/"
                             >
-                                Login
+                                Logout
                             </NavbarButton>
                             <div className="flex w-full flex-col gap-4">
                                 <NavbarButton
@@ -94,4 +90,4 @@ export function ResizableNav() {
     );
 }
 
-export default ResizableNav;
+export default DashboardNav

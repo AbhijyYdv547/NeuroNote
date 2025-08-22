@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { clearToken } from "../../hooks/useAuthToken";
 import { useRouter } from "next/navigation";
 import axios from "@/lib/axios"
+import DashboardNav from "@/components/DashboardNav";
 
 
 export default function Dashboard() {
@@ -105,22 +106,12 @@ export default function Dashboard() {
     }
   }
 
-  function handleLogout() {
-    clearToken();
-    router.push("/");
-  }
-
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col items-center py-10 px-4">
+    <div className="min-h-screen bg-black text-white flex flex-col items-center py-10 px-4 gap-10">
+      <DashboardNav/>
       <div className="w-full max-w-md bg-zinc-900 p-6 rounded-xl shadow-lg space-y-6">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold">Dashboard</h2>
-          <button
-            className="text-sm bg-red-600 px-3 py-1 rounded hover:bg-red-700"
-            onClick={handleLogout}
-          >
-            Logout
-          </button>
         </div>
 
         {/* CREATE ROOM */}
