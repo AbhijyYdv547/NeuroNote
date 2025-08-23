@@ -3,6 +3,7 @@
 import { useDocContentStore } from '@/store/DocContentStore';
 import axios from "@/lib/axios";
 import React, { useEffect, useRef, useState } from 'react'
+import { toast } from 'sonner';
 
 
 const SummarizationBox = ({ roomId }: { roomId: string }) => {
@@ -23,7 +24,7 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
               setSummary(data)
           } catch (err) {
               console.error("Summarization error:", err);
-              alert("Failed to summarize the document.");
+              toast("Failed to summarize the document.");
           } finally {
               setLoading(false);
           }
@@ -39,7 +40,7 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
               setGrammar(data)
           } catch (err) {
               console.error("Grammar generation error:", err);
-              alert("Failed to summarize the document.");
+              toast("Failed to summarize the document.");
           } finally {
               setLoading(false);
           }

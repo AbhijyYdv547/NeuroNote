@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import AuthPage from "@/components/AuthPage";
 import { useRedirectIfLoggedIn } from "@/hooks/useRedirectIfLoggedIn";
 import axios from "@/lib/axios"
+import { toast } from "sonner"
 
 export default function Login() {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -19,7 +20,7 @@ export default function Login() {
     const password = passwordRef.current?.value;
 
     if (!email || !password) {
-      console.error("Please fill in all fields");
+      toast("Please fill in all fields");
       return;
     }
 
@@ -30,7 +31,9 @@ export default function Login() {
       } else {
         console.error("Login failed", res.data);
       }
+      toast("User has been logged in")
     } catch (err: any) {
+      toast("Login error.Please try again after some time")
       console.error("Login error", err.response?.data || err);
     }
   }

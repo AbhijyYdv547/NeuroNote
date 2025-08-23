@@ -1,5 +1,6 @@
 
 import axios from "@/lib/axios";
+import { toast } from "sonner";
 
 export async function clearToken() {
   axios.post("/api/auth/logout",{},
@@ -10,6 +11,7 @@ export async function clearToken() {
         withCredentials: true, 
       }
  );
+ toast("User has been logged out!")
  
 }
 
@@ -23,6 +25,7 @@ export async function getToken(){
       }
       return token;
     } catch (err: any) {
-      console.error("error", err.response?.data || err);
+      toast("Some error occured")
+      console.log("error", err.response?.data || err);
     }
 }

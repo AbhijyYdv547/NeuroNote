@@ -6,6 +6,7 @@ import React, { useRef, useState } from 'react'
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 
 const CreateRoomBox = () => {
     const [loadingCreate, setLoadingCreate] = useState(false);
@@ -33,7 +34,7 @@ const CreateRoomBox = () => {
         const roomName = roomRef.current?.value.trim();
 
         if (!roomName) {
-            alert("Room name is required");
+            toast("Room name is required");
             return;
         }
         try {
@@ -43,14 +44,14 @@ const CreateRoomBox = () => {
 
             if (res.data.secretCode) {
                 setSecretCode(res.data.secretCode);
-                alert("Room created!");
+                toast("Room created!");
                 showRooms();
             } else {
-                alert(res.data.message);
+                toast(res.data.message);
             }
         } catch (err) {
             console.log("ERROR CR:", err);
-            alert("Error creating room");
+            toast("Error creating room");
         } finally {
             setLoadingCreate(false);
         }

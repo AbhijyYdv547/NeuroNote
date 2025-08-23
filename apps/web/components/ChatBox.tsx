@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { backendURL, wsURL } from "@/config/url";
 import axios from "@/lib/axios";
 import { getToken } from "@/hooks/useAuthToken";
+import { toast } from "sonner";
 
 interface ChatMessage {
   sender: string;
@@ -35,7 +36,7 @@ export default function ChatBox({ roomId }: { roomId: string }) {
           name: res.data.user.name
         });
       } catch (err) {
-        console.error("Error fetching user:", err);
+        toast("Error fetching user");
       }
     }
 

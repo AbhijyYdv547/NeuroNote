@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import AuthPage from "@/components/AuthPage";
 import { useRedirectIfLoggedIn } from "@/hooks/useRedirectIfLoggedIn";
 import axios from "@/lib/axios";
+import { toast } from "sonner";
 
 
 export default function Signup() {
@@ -22,7 +23,7 @@ export default function Signup() {
     const password = passwordRef.current?.value;
 
     if (!name || !email || !password) {
-      console.error("Please fill in all fields");
+      toast("Please fill in all fields");
       return;
     }
 
@@ -38,7 +39,9 @@ export default function Signup() {
       } else {
         console.error("Register failed", res.data);
       }
+      toast("User has been registered successfully")
     } catch (err:any) {
+      toast("Registration failed. Please try again. Make sure the password must be at least 8 characters long and include uppercase, lowercase, number, and special character.")
       console.error("Registration error", err.response?.data || err);
     }
     }

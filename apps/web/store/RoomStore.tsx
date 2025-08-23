@@ -2,6 +2,7 @@ import { create } from "zustand"
 import axios from "@/lib/axios"
 import { RefObject } from "react";
 import { clearToken } from "@/hooks/useAuthToken";
+import { toast } from "sonner";
 
 interface RoomStoreState {
     loadingShow: boolean;
@@ -32,7 +33,7 @@ export const useRoomStore = create<RoomStoreState>((set) => ({
             set({ rooms: res.data.rooms });
         } catch (err: any) {
             console.log("ERROR SR:", err);
-            alert(err.response?.data?.message || "Error loading rooms");
+            toast(err.response?.data?.message || "Error loading rooms");
         } finally {
             set({ loadingShow: false });
         }
@@ -43,7 +44,7 @@ export const useRoomStore = create<RoomStoreState>((set) => ({
         const code = secretCode.current?.value.trim();
 
         if (!code) {
-            alert("Room code is required");
+            toast("Room code is required");
             return;
         }
         try {
@@ -56,11 +57,11 @@ export const useRoomStore = create<RoomStoreState>((set) => ({
             if (data.room) {
                 router.push(`/room/${data.room.id}`);
             } else {
-                alert(data.message || "Room not found or invalid code");
+                toast(data.message || "Room not found or invalid code");
             }
         } catch (err) {
             console.log("ERROR JR:", err);
-            alert("Error joining room");
+            toast("Error joining room");
         } finally {
             set({ loadingJoin: true });
         }
@@ -75,11 +76,11 @@ export const useRoomStore = create<RoomStoreState>((set) => ({
             if (data.room) {
                 router.push(`/room/${data.room.id}`);
             } else {
-                alert(data.message || "Room not found or invalid code");
+                toast(data.message || "Room not found or invalid code");
             }
         } catch (err: any) {
             console.log("ERROR JRI:", err);
-            alert(err.response?.data?.message || "Error joining room");
+            toast(err.response?.data?.message || "Error joining room");
         } finally {
             set({ loadingJoin: false })
         }
