@@ -52,7 +52,7 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
     }, [loading, summary, grammar]);
 
     return (
-        <div className="h-full flex flex-col bg-zinc-950 text-white min-h-0">
+        <div className="h-full flex flex-col bg-[#171717] text-white min-h-0">
             
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0">
@@ -104,7 +104,7 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
                 <button
                     disabled={loading}
                     className={`px-3 py-2 rounded text-sm font-medium flex gap-1 items-center 
-            ${loading ? "bg-blue-600 opacity-50 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}
+            ${loading ? "bg-zinc-200 text-zinc-600 opacity-50 cursor-not-allowed" : "bg-zinc-600 text-zinc-200 hover:bg-zinc-200 hover:text-zinc-600"}`}
                     onClick={summarizeDoc}
                 >
                     <div>Summarize Document</div>
@@ -116,7 +116,7 @@ const SummarizationBox = ({ roomId }: { roomId: string }) => {
                 <button
                     disabled={loading}
                     className={`px-3 py-2 rounded text-sm font-medium flex gap-1 items-center 
-            ${loading ? "bg-blue-600 opacity-50 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}`}
+            ${loading ? "bg-zinc-200 text-zinc-600 opacity-50 cursor-not-allowed" : "bg-zinc-600 text-zinc-200 hover:bg-zinc-200 hover:text-zinc-600"}`}
                     onClick={checkGrammar}
                 >
                     <div>Check Grammar</div>

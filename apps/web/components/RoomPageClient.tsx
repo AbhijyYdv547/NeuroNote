@@ -19,7 +19,7 @@ export default function RoomPage({ roomId }: { roomId:string}) {
 
         {/* Editor Section */}
         <div className='flex'>
-            <AppSidebar />
+            <AppSidebar roomId={roomId} />
             <SidebarTrigger/>
         </div>
 
@@ -41,7 +41,7 @@ export default function RoomPage({ roomId }: { roomId:string}) {
         >
           
           {/* Chat Content */}
-          <div className="h-full pb-16">
+          <div className="h-full ">
             <ChatRoomClient roomId={roomId} />
           </div>
         </div>
@@ -61,7 +61,7 @@ export default function RoomPage({ roomId }: { roomId:string}) {
         >
           
           {/* Summarization Content */}
-          <div className="h-full pb-16">
+          <div className="h-full">
             <SummarizationBox roomId={roomId} />
           </div>
         </div>

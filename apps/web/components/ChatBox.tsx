@@ -11,9 +11,9 @@ interface ChatMessage {
   timestamp: string;
 }
 
-interface ChatUser{
-  id:string,
-  name:string
+interface ChatUser {
+  id: string,
+  name: string
 }
 
 export default function ChatBox({ roomId }: { roomId: string }) {
@@ -51,9 +51,9 @@ export default function ChatBox({ roomId }: { roomId: string }) {
   }, []);
 
   useEffect(() => {
-    
+
     if (!currentUser) return;
-    if(!token) return;
+    if (!token) return;
 
     const ws = new WebSocket(`${wsURL}?token=${token}`);
 
@@ -119,9 +119,9 @@ export default function ChatBox({ roomId }: { roomId: string }) {
       }
       ws.close();
     };
-  }, [roomId, currentUser,token]);
+  }, [roomId, currentUser, token]);
 
-  // Scroll to bottom on new messages
+
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -147,7 +147,7 @@ export default function ChatBox({ roomId }: { roomId: string }) {
   }
 
   return (
-    <div className="h-full flex flex-col bg-zinc-950 text-white min-h-0">
+    <div className="h-full flex flex-col bg-[#171717] text-white min-h-0">
       {/* Online Users */}
       <div className="flex-shrink-0 p-3 border-b border-zinc-800 bg-zinc-900">
         <div className="flex flex-wrap items-center gap-2 text-sm">
@@ -157,8 +157,8 @@ export default function ChatBox({ roomId }: { roomId: string }) {
               key={index}
               className={`px-2 py-1 rounded-full text-xs font-medium shadow-sm transition-colors
                 ${userId === currentUser?.id
-                  ? "bg-blue-600 text-white"
-                  : "bg-zinc-800 text-gray-200"
+                  ? "bg-white text-black"
+                  : "bg-[#262626] text-gray-200"
                 }`}
             >
               {userId === currentUser?.id ? "You" : userId}
@@ -169,22 +169,6 @@ export default function ChatBox({ roomId }: { roomId: string }) {
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-3 space-y-3 min-h-0">
-        <style jsx>{`
-          .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-          }
-          .custom-scrollbar::-webkit-scrollbar-track {
-            background: rgb(39 39 42);
-            border-radius: 3px;
-          }
-          .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgb(82 82 91);
-            border-radius: 3px;
-          }
-          .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: rgb(113 113 122);
-          }
-        `}</style>
         <div className="space-y-3 custom-scrollbar">
           {messages.map((msg, index) => {
             const isSelf = msg.sender.toString() === currentUser?.id;
@@ -196,15 +180,15 @@ export default function ChatBox({ roomId }: { roomId: string }) {
               >
                 <div
                   className={`rounded-xl px-3 py-2 max-w-[85%] break-words shadow-md ${isSelf
-                      ? "bg-blue-600 text-white rounded-br-none"
-                      : "bg-zinc-800 text-gray-100 rounded-bl-none"
+                    ? "bg-zinc-200 text-black rounded-br-none"
+                    : "bg-[#262626] text-gray-100 rounded-bl-none"
                     }`}
                 >
-                  <div className="text-xs text-gray-400 mb-1 font-medium">
+                  <div className="text-xs text-gray-500 mb-1 font-medium">
                     {isSelf ? "You" : msg.sender}
                   </div>
                   <div className="text-sm">{msg.message}</div>
-                  <div className="text-[10px] text-gray-400 mt-1 text-right">
+                  <div className="text-[10px] text-gray-500 mt-1 text-right">
                     {new Date(msg.timestamp).toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",
@@ -241,7 +225,7 @@ export default function ChatBox({ roomId }: { roomId: string }) {
           <button
             onClick={sendMessage}
             disabled={!input.trim()}
-            className="bg-blue-600 px-3 py-2 rounded hover:bg-blue-700 transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed text-sm font-medium"
+            className="bg-[#828282] px-3 py-2 rounded hover:bg-zinc-300 transition-colors text-zinc-700 text-sm font-medium"
           >
             Send
           </button>

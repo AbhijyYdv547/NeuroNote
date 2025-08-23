@@ -15,12 +15,12 @@ import { useRouter } from "next/navigation";
 
 // Menu items.
 
-export function AppSidebar() {
+export function AppSidebar({roomId}:{roomId:string}) {
       const router = useRouter();
     const {handleLogout,toggleChat,toggleSum} = useRoomStore();
     const items = [
         {
-            title: "Document",
+            title: "Dashboard",
             onClick:()=> router.push("/dashboard"), 
             icon: Home,
         },
@@ -44,11 +44,11 @@ export function AppSidebar() {
         <Sidebar>
             <SidebarContent>
                 <SidebarGroup>
-                    <SidebarGroupLabel>Application</SidebarGroupLabel>
+                    <SidebarGroupLabel>Room:{roomId}</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {items.map((item) => (
-                                <SidebarMenuItem key={item.title}>
+                                <SidebarMenuItem key={item.title} className="cursor-pointer">
                                     <SidebarMenuButton asChild>
                                         <div onClick={item.onClick}>
                                             <item.icon />
