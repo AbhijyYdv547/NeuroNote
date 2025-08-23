@@ -1,20 +1,28 @@
 import { create } from "zustand"
 import axios from "@/lib/axios"
 import { RefObject } from "react";
+import { clearToken } from "@/hooks/useAuthToken";
 
 interface RoomStoreState {
     loadingShow: boolean;
     loadingJoin: boolean;
+    chatOpen: boolean;
+    sumOpen: boolean;
     rooms: [];
     showRooms: () => Promise<void>
     joinRoom: (secretCode: RefObject<HTMLInputElement | null>, router: any) => Promise<void>;
     joinRoomViaId: (roomId: number, router: any) => Promise<void>;
+    handleLogout: (router: any) => Promise<void>
+    toggleChat: () => void
+    toggleSum: () => void
 }
 
 
 export const useRoomStore = create<RoomStoreState>((set) => ({
     loadingShow: false,
     loadingJoin: false,
+    chatOpen: false,
+    sumOpen: false,
     rooms: [],
 
     showRooms: async () => {
@@ -75,7 +83,25 @@ export const useRoomStore = create<RoomStoreState>((set) => ({
         } finally {
             set({ loadingJoin: false })
         }
-    }
+    },
+
+    handleLogout: async(router) => {
+        clearToken();
+        router.push("/")
+    },
+    
+    toggleChat: () => set((state) => ({
+        chatOpen: !state.chatOpen,
+        sumOpen: false
+    })),
+
+    toggleSum: () => set((state) => ({
+        sumOpen: !state.sumOpen,
+        chatOpen: false
+    })),
+
+
+
 
 
 }))
