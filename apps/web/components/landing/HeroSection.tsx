@@ -17,13 +17,13 @@ const HeroSection = () => {
                 AI-powered content enhancement, and seamless synchronization.
             </p>
             <div className="flex justify-center my-10 md:gap-8 gap-2">
-                <button className="p-1 relative" onClick={()=> router.push("/signup")}>
+                <button className="p-1 relative cursor-pointer" onClick={()=> router.push("/signup")}>
                     <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
                     <div className="px-8 py-2  bg-zinc-900 rounded-[6px]  relative group transition duration-200 text-white hover:bg-transparent">
                         Sign up
                     </div>
                 </button>
-                <button className="p-1 relative" onClick={() => router.push("/login")}>
+                <button className="p-1 relative cursor-pointer" onClick={() => router.push("/login")}>
                     <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
                     <div className="px-8 py-2  bg-zinc-900 rounded-[6px]  relative group transition duration-200 text-white hover:bg-transparent">
                         Login
