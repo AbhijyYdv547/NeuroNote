@@ -15,6 +15,24 @@ export const signupController =  async (req:Request, res:Response) => {
     return;
   }
 
+    const trimmedPassword = parsedData.data.password.trim();
+    const regex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,}$/;
+
+    if (!regex.test(trimmedPassword)) {
+      res.status(400).json({ message: 'Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.' });
+      return;
+    }
+
+    const existingUser =  await prismaClient.user.findFirst({
+      where: {
+        email: parsedData.data.email
+      }
+    })
+    if (existingUser) {
+      res.status(409).json({ error: "Email already in use" });
+      return;
+    }
+
   try {
     const hashedPassword = await bcryptjs.hash(parsedData.data.password, 10);
     const user = await prismaClient.user.create({
