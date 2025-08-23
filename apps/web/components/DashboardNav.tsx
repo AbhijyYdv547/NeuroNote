@@ -10,17 +10,15 @@ import {
     MobileNavToggle,
     MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
-import { clearToken } from "@/hooks/useAuthToken";
+
+import { useRoomStore } from "@/store/RoomStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const DashboardNav = () => {
 
-      function handleLogout() {
-        clearToken();
-        router.push("/");
-      }
+    const {handleLogout} = useRoomStore();
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const router = useRouter();
@@ -32,7 +30,7 @@ const DashboardNav = () => {
                 <NavBody>
                     <NavbarLogo />
                     <div className="flex items-center gap-4">
-                        <NavbarButton variant="custom" onClick={handleLogout}>Logout</NavbarButton>
+                        <NavbarButton variant="custom" onClick={()=>handleLogout(router)}>Logout</NavbarButton>
                         <NavbarButton
                             variant="primary"
                             className="bg-slate-200 hover:bg-gray-50 rounded-full"
@@ -61,7 +59,7 @@ const DashboardNav = () => {
                             <NavbarButton
                                 onClick={() =>{
                                     setIsMobileMenuOpen(false)
-                                    handleLogout()
+                                    handleLogout(router)
                                 } }
                                 variant="custom"
                                 className="w-full"

@@ -36,7 +36,7 @@ export default function RoomPage({ roomId }: { roomId:string}) {
 
         {/* Chat Sidebar */}
         <div
-          className={`fixed right-0 top-16 bottom-0 w-80 h-full shadow-lg border-l border-gray-200 transform transition-transform duration-300 ease-in-out z-10 ${chatOpen ? 'translate-x-0' : 'translate-x-full'
+          className={`fixed right-0 top-0 bottom-0 w-80 shadow-lg border-l border-gray-200 transform transition-transform duration-300 ease-in-out z-10 ${chatOpen ? 'translate-x-0' : 'translate-x-full'
             }`}
         >
           
@@ -56,7 +56,7 @@ export default function RoomPage({ roomId }: { roomId:string}) {
 
         {/* Summarization Sidebar */}
         <div
-          className={`fixed right-0 top-16 bottom-0 w-80 h-full shadow-lg border-l border-gray-200 transform transition-transform duration-300 ease-in-out z-10 ${sumOpen ? 'translate-x-0' : 'translate-x-full'
+          className={`fixed right-0 top-0 bottom-0 w-80 shadow-lg border-l border-gray-200 transform transition-transform duration-300 ease-in-out z-10 ${sumOpen ? 'translate-x-0' : 'translate-x-full'
             }`}
         >
           
