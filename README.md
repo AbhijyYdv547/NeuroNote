@@ -51,43 +51,48 @@
 <details>
 <summary>Landing Page</summary>
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/421bb724-3da5-44ab-a34c-9657ab590c85" width="600"/>
+  <img src="https://github.com/user-attachments/assets/31e7e001-60b3-40b0-8967-883f95f9ccd4" width="600" />
+
 </p>
 </details>
 
 <details>
 <summary>Login and Signup Pages</summary>
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/e1f734b4-471e-4a19-84a5-c841fb9a7f3c" width="300"/>
-  <img src="https://github.com/user-attachments/assets/167305d2-b97a-4bdd-8339-339d175d1785" width="300"/>
+  <img src="https://github.com/user-attachments/assets/0dc3d76f-6e38-4269-924a-eadc54dcec40" width="300" />
+  <img src="https://github.com/user-attachments/assets/524e5e20-207f-4526-8086-40fe2b981d55" width="300" />
+
 </p>
 </details>
 
 <details>
 <summary>Dashboard</summary>
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/8c9b61dc-89ba-4413-b7ab-43d4054b26f4" width="600"/>
+  <img src="https://github.com/user-attachments/assets/4a66b8ec-e68a-4ac0-ba44-5db25ed7b805" width="600" />
+
 </p>
 </details>
 
 <details>
 <summary>Collaborative Editor</summary>
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/ded6da2d-caa4-40e7-b0cf-36d7c8fe6223" width="600"/>
+  <img src="https://github.com/user-attachments/assets/4602607d-f072-451f-b311-bc134799b2e8" width="600" />
+
 </p>
 </details>
 
 <details>
 <summary>Room Chat</summary>
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/e7432b14-85de-4dcf-be77-604e4fddc16f" width="600"/>
+  <img src="https://github.com/user-attachments/assets/ea0a3a73-f188-4e95-9bb2-40d0323f7e4c" width="600" />
 </p>
 </details>
 
 <details>
 <summary>AI Summarization & Grammar-check</summary>
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/467e3fdf-2700-4006-a110-94a91b394684" width="600"/>
+  <img src="https://github.com/user-attachments/assets/57b2d3e8-c082-481f-94fc-8a1b46d85a21" width="600" />
+
 </p>
 </details>
 
