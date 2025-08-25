@@ -1,4 +1,4 @@
-import express from "express";
+import express,{Request,Response} from "express";
 import cors from "cors"
 import authRoutes from "./routes/authRoutes";
 import dashboardRoutes from "./routes/dashboardRoutes";
@@ -24,6 +24,10 @@ app.use("/api/auth",authRoutes)
 app.use("/api/dashboard", dashboardRoutes);
 
 app.use("/api/room",roomRoutes);
+
+app.get("/health", (req: Request, res: Response) => {
+  res.json({ status: "ok" });
+});
 
 const PORT = Number(process.env.PORT) || 3001; 
 
