@@ -37,7 +37,7 @@ export default function AuthPage({
             </h2>
             <p className="mt-2 max-w-sm mx-auto text-sm text-neutral-800 dark:text-neutral-200 text-center">
               {login
-                ? "Login to Resume Builder"
+                ? "Login to Neuronote"
                 : "Start your journey by Registering"}
             </p>
           </div>
