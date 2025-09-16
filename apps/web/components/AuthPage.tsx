@@ -33,7 +33,7 @@ export default function AuthPage({
           </div>
           <div className="flex-1 text-center">
             <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200 text-center">
-              {login ? "Welcome back 😎 " : "Welcome to Resume Builder😊"}
+              {login ? "Welcome back 😎 " : "Welcome to NeuronNote😊"}
             </h2>
             <p className="mt-2 max-w-sm mx-auto text-sm text-neutral-800 dark:text-neutral-200 text-center">
               {login
