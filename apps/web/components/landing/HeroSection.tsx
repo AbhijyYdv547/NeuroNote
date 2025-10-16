@@ -17,18 +17,23 @@ const HeroSection = () => {
                 AI-powered content enhancement, and seamless synchronization.
             </p>
             <div className="flex justify-center my-10 md:gap-8 gap-2">
-                <button className="p-1 relative cursor-pointer" onClick={()=> router.push("/signup")}>
-                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
-                    <div className="px-8 py-2  bg-zinc-900 rounded-[6px]  relative group transition duration-200 text-white hover:bg-transparent">
+
+                <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+                    onClick={() => router.push("/signup")}>
+                    <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+                    <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-15 py-5 text-sm font-medium text-white backdrop-blur-3xl">
                         Sign up
-                    </div>
+                    </span>
                 </button>
-                <button className="p-1 relative cursor-pointer" onClick={() => router.push("/login")}>
-                    <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
-                    <div className="px-8 py-2  bg-zinc-900 rounded-[6px]  relative group transition duration-200 text-white hover:bg-transparent">
+
+                <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+                    onClick={() => router.push("/login")}>
+                    <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+                    <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-15 py-5 text-sm font-medium text-white backdrop-blur-3xl">
                         Login
-                    </div>
+                    </span>
                 </button>
+
             </div>
             <div className="flex mt-10 justify-center">
                 <video
