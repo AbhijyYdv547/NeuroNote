@@ -1,3 +1,5 @@
+// localhost me use karne ke liye samesite: "lax" karna hoga
+
 import { CreateUserSchema, SigninSchema } from "@repo/common/types";
 import { prismaClient } from "@repo/db/client";
 import bcryptjs from "bcryptjs"
